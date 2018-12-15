@@ -5,6 +5,7 @@
   "author": "Maikel van Veen <maikeloo10@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "start-client": "cd client && yarn start-client"
+    "start-client": "cd client && yarn start-client",
+    "tslint": "tslint -p . -c tslint.json \"**/*.ts\" \"**/*.tsx\""
   }
 }
