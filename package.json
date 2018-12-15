@@ -1,0 +1,10 @@
+{
+  "name": "collection-manager",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Maikel van Veen <maikeloo10@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start-client": "cd client && yarn start-client"
+  }
+}
