@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Page } from '../components/Layout/Page/Page'
 import { BEM } from '../services/BEMService'
+import { CollectionsView } from './Collections/CollectionsView'
 
 interface Props {}
 
@@ -10,7 +11,7 @@ export class RootView extends React.Component<Props> {
     public render() {
         return (
             <Page className={this.bem.getClassName()}>
-                Hoi
+                <CollectionsView />
             </Page>
         )
     }
