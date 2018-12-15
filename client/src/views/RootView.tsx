@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Page } from '../components/Layout/Page/Page'
+import { Page } from '../components/Core/Layout/Page/Page'
 import { BEM } from '../services/BEMService'
 import { CollectionsView } from './Collections/CollectionsView'
 

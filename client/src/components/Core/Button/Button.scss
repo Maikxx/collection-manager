@@ -1,0 +1,252 @@
+.cm-Button {
+    @import "../../../scss/variables/colors";
+
+    // Variables
+    $default-color: $color-white;
+    $default-background-color: $color-orange;
+    $default-border-color: mix($color-orange, rgba(0, 0, 0, 0.2));
+
+    $secondary-color: $color-white;
+    $secondary-background-color: $color-contribution;
+    $secondary-border-color: mix($color-contribution, rgba(0, 0, 0, 0.2));
+
+    $tertiary-color: $color-white;
+    $tertiary-background-color: $color-brand;
+    $tertiary-border-color: $color-brand;
+
+    $danger-color: $color-red;
+    $danger-background-color: transparent;
+    $danger-border-color: transparent;
+
+    $confirm-color: $color-white;
+    $confirm-background-color: $color-positive;
+    $confirm-border-color: mix($color-positive, rgba(0, 0, 0, 0.2));
+
+    $cancel-color: $color-text;
+    $cancel-background-color: transparent;
+    $cancel-border-color: transparent;
+
+    $icon-color: $color-link;
+    $icon-background-color: transparent;
+    $icon-border-color: transparent;
+
+    $action-color: $color-link;
+    $action-background-color: transparent;
+    $action-border-color: $color-link;
+
+    position: relative;
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    white-space: nowrap;
+    padding: 8px 18px;
+    border-radius: 2px;
+    user-select: none;
+    transition: all 0.1s;
+    position: relative;
+    color: $default-color;
+    background-color: $default-background-color;
+    text-decoration: none;
+    border: 0;
+
+    // ELEMENTS
+    &__inner {
+        display: flex;
+        align-items: center;
+
+        .cm-Button--is-loading & {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    .cm-Loader.cm-Button__spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -10px;
+        margin-left: -10px;
+    }
+
+    .cm-Icon.cm-Button__icon {
+        font-size: 12px;
+        margin-right: 8px;
+        color: inherit;
+
+    }
+
+    &--is-icon-button {
+        padding: 11px;
+        .cm-Icon.cm-Button__icon {
+            font-size: 12px;
+            margin-right: 0;
+        }
+    }
+
+    // MODIFIERS
+    &:focus {
+        z-index: 1;
+    }
+
+    &:hover {
+        background-color: darken($default-background-color, 5%);
+        z-index: 1;
+    }
+
+    &:active {
+        background-color: darken($default-background-color, 10%);
+        z-index: 1;
+    }
+
+    // Disabled styles
+    &--is-disabled {
+        color: $color-dark-grey;
+        background-color: $color-alto-grey;
+        cursor: not-allowed;
+
+        &:hover {
+            background-color: $color-alto-grey;
+        }
+    }
+
+    // Button styles
+    &--is-danger {
+        background-color: $danger-background-color;
+        color: $danger-color;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        &:active {
+            color: darken($danger-color, 5%);
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &.cm-Button--is-disabled {
+            color: fade_out($danger-color, 0.5);
+            background-color: fade_out($danger-background-color, 0.5);
+        }
+    }
+
+    &--is-confirm {
+        background-color: $confirm-background-color;
+        color: $confirm-color;
+
+        &:hover {
+            background-color: darken($confirm-background-color, 5%);
+        }
+
+        &:active {
+            background-color: darken($confirm-background-color, 10%);
+        }
+
+        &.cm-Button--is-disabled {
+            color: fade_out($confirm-color, 0.5);
+            background-color: fade_out($confirm-background-color, 0.5);
+        }
+    }
+
+    &--is-secondary {
+        background-color: $secondary-background-color;
+        color: $secondary-color;
+
+        &:hover {
+            background-color: darken($secondary-background-color, 5%);
+        }
+
+        &:active {
+            background-color: darken($secondary-background-color, 10%);
+        }
+
+        &.cm-Button--is-disabled {
+            color: fade_out($secondary-color, 0.5);
+            background-color: fade_out($secondary-background-color, 0.5);
+        }
+    }
+
+    &--is-tertiary {
+        background-color: $tertiary-background-color;
+        color: $tertiary-color;
+
+        &:hover {
+            background-color: darken($tertiary-background-color, 10%);
+        }
+
+        &:active {
+            background-color: darken($tertiary-background-color, 5%);
+        }
+    }
+
+    &--is-cancel {
+        background-color: $cancel-background-color;
+        color: $cancel-color;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        &:active {
+            color: darken($cancel-color, 5%);
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &.cm-Button--is-disabled {
+            color: fade_out($cancel-color, 0.5);
+            background-color: fade_out($cancel-background-color, 0.5);
+        }
+    }
+
+    &--is-link {
+        background-color: transparent;
+        color: $color-link;
+        padding: 0;
+
+        &:hover {
+            color: $color-link;
+            text-decoration: underline;
+            background-color: transparent;
+        }
+
+        &:active {
+            color: $color-link;
+            background-color: transparent;
+        }
+
+        &.cm-Button--is-disabled {
+            color: $color-medium-grey;
+            text-decoration: none;
+            background-color: transparent;
+        }
+    }
+
+    &--is-icon {
+        background-color: $icon-background-color;
+        color: $icon-color;
+
+        .cm-Icon.cm-Button__icon {
+            font-size: 16px;
+        }
+
+        &:hover {
+            background-color: darken($icon-background-color, 5%);
+        }
+
+        &:active {
+            background-color: darken($icon-background-color, 10%);
+        }
+
+        &.cm-Button--is-disabled {
+            color: fade_out($icon-color, 0.5);
+            background-color: fade_out($icon-background-color, 0.5);
+        }
+    }
+
+    &--is-action &__label {
+        padding: 12px 14px;
+    }
+}

@@ -1,6 +1,6 @@
 import './Page.scss'
 import * as React from 'react'
-import { BEM } from '../../../services/BEMService'
+import { BEM } from '../../../../services/BEMService'
 
 interface Props {
     className?: string

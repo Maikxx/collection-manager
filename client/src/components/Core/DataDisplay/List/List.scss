@@ -1,0 +1,33 @@
+.cm-List {
+    &--horizontal {
+        text-align: right;
+
+        > .cm-ListItem {
+            display: inline-block;
+            text-align: left;
+
+            &--right {
+                float: none;
+            }
+
+            & + .cm-ListItem {
+                margin-left: 12px;
+            }
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+    }
+
+    &--stretch {
+        display: flex;
+        align-items: center;
+
+        > .cm-ListItem {
+            flex: 1;
+        }
+    }
+}
