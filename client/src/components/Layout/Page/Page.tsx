@@ -21,8 +21,8 @@ export class Page extends React.Component<Props> {
     private getClassName = () => {
         const { className, hasPageHeader } = this.props
 
-        return c('asa-Page', {
-            'asa-Page--has-page-header': hasPageHeader,
+        return c('cm-Page', {
+            'cm-Page--has-page-header': hasPageHeader,
         }, className)
     }
 }

@@ -31,18 +31,18 @@ export class Accordion extends React.Component<Props, State> {
                 onChange={this.onChange}
             >
                 <ExpansionPanelSummary
-                    className={`asa-Accordion__header`}
+                    className={`cm-Accordion__header`}
                     expandIcon={<ExpandMoreIcon />}
                 >
-                    <FilterIcon className={`asa-Accordion__icon`}/>
+                    <FilterIcon className={`cm-Accordion__icon`}/>
                     <Typography
-                        className={`asa-Accordion__text`}
+                        className={`cm-Accordion__text`}
                         variant={`subheading`}
                     >
                         {buttonText}
                     </Typography>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails className={`asa-Accordion__content`}>
+                <ExpansionPanelDetails className={`cm-Accordion__content`}>
                     {children}
                 </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -57,8 +57,8 @@ export class Accordion extends React.Component<Props, State> {
         const { className } = this.props
         const { isExpanded } = this.state
 
-        return c('asa-Accordion', {
-            'asa-Accordion--is-expanded': isExpanded,
+        return c('cm-Accordion', {
+            'cm-Accordion--is-expanded': isExpanded,
         }, className)
     }
 }

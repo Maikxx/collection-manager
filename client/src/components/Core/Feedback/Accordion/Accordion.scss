@@ -1,4 +1,4 @@
-.asa-Accordion {
+.cm-Accordion {
     @import '../../../../scss/variables/colors';
 
     &__header {
@@ -33,7 +33,7 @@
     }
 
     &--is-expanded {
-        .asa-Accordion__header {
+        .cm-Accordion__header {
             &::after {
                 opacity: 1;
             }

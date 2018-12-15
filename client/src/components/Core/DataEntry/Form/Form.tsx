@@ -58,6 +58,6 @@ export class Form extends React.Component<Props> {
     private getClassName = () => {
         const { className } = this.props
 
-        return c('asa-Form', {}, className)
+        return c('cm-Form', {}, className)
     }
 }

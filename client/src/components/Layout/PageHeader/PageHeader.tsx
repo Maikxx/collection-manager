@@ -20,7 +20,7 @@ export class PageHeader extends React.Component<Props> {
                 position={`fixed`}
             >
                 <Typography
-                    className={`asa-PageHeader__title`}
+                    className={`cm-PageHeader__title`}
                     component={`h1`}
                     variant={`h4`}
                 >
@@ -34,6 +34,6 @@ export class PageHeader extends React.Component<Props> {
     private getClassName = () => {
         const { className } = this.props
 
-        return c('asa-PageHeader', {}, className)
+        return c('cm-PageHeader', {}, className)
     }
 }

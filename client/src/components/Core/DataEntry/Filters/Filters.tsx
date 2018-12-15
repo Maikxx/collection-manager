@@ -24,6 +24,6 @@ export class Filters extends React.Component<Props> {
     private getClassName = () => {
         const { className } = this.props
 
-        return c('asa-Filters', {}, className)
+        return c('cm-Filters', {}, className)
     }
 }

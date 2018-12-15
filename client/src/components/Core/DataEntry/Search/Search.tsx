@@ -13,14 +13,14 @@ export class Search extends React.Component<Props> {
     public render() {
         return (
             <div className={this.getClassName()}>
-                <div className={`asa-Search__search-icon`}>
+                <div className={`cm-Search__search-icon`}>
                     <SearchIcon />
                 </div>
                 <InputBase
                     placeholder={`Search for a plane`}
                     classes={{
-                        input: `asa-Search__input-input`,
-                        root: `asa-Search__input-root`,
+                        input: `cm-Search__input-input`,
+                        root: `cm-Search__input-root`,
                     }}
                     onKeyUp={this.onInputChange}
                 />
@@ -39,6 +39,6 @@ export class Search extends React.Component<Props> {
     private getClassName = () => {
         const { className } = this.props
 
-        return c('asa-Search', {}, className)
+        return c('cm-Search', {}, className)
     }
 }

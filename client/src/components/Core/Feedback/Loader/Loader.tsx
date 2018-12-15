@@ -16,6 +16,6 @@ export class Loader extends React.PureComponent<Props> {
     private getClassName = () => {
         const { className } = this.props
 
-        return c('asa-Loader', {}, className)
+        return c('cm-Loader', {}, className)
     }
 }
