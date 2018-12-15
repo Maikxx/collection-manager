@@ -2,7 +2,7 @@ import './Search.scss'
 import * as React from 'react'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
-import c from 'classnames'
+import { BEM } from '../../../../services/BEMService'
 
 interface Props {
     className?: string
@@ -10,17 +10,21 @@ interface Props {
 }
 
 export class Search extends React.Component<Props> {
+    private bem = new BEM('Search')
+
     public render() {
+        const { className } = this.props
+
         return (
-            <div className={this.getClassName()}>
-                <div className={`cm-Search__search-icon`}>
+            <div className={this.bem.getClassName(className)}>
+                <div className={this.bem.getElement('search-icon')}>
                     <SearchIcon />
                 </div>
                 <InputBase
                     placeholder={`Search for a plane`}
                     classes={{
-                        input: `cm-Search__input-input`,
-                        root: `cm-Search__input-root`,
+                        input: this.bem.getElement('input-input'),
+                        root: this.bem.getElement('input-root'),
                     }}
                     onKeyUp={this.onInputChange}
                 />
@@ -34,11 +38,5 @@ export class Search extends React.Component<Props> {
         const { value } = target
 
         onSearch(value)
-    }
-
-    private getClassName = () => {
-        const { className } = this.props
-
-        return c('cm-Search', {}, className)
     }
 }

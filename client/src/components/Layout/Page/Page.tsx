@@ -1,6 +1,6 @@
 import './Page.scss'
 import * as React from 'react'
-import c from 'classnames'
+import { BEM } from '../../../services/BEMService'
 
 interface Props {
     className?: string
@@ -8,21 +8,17 @@ interface Props {
 }
 
 export class Page extends React.Component<Props> {
+    private bem = new BEM('Page', () => ({
+        'cm-Page--has-page-header': this.props.hasPageHeader,
+    }))
+
     public render() {
-        const { children } = this.props
+        const { children, className } = this.props
 
         return (
-            <main className={this.getClassName()}>
+            <main className={this.bem.getClassName(className)}>
                 {children}
             </main>
         )
-    }
-
-    private getClassName = () => {
-        const { className, hasPageHeader } = this.props
-
-        return c('cm-Page', {
-            'cm-Page--has-page-header': hasPageHeader,
-        }, className)
     }
 }

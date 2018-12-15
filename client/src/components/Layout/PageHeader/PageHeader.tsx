@@ -2,8 +2,8 @@ import './PageHeader.scss'
 import * as React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Typography from '@material-ui/core/Typography'
-import c from 'classnames'
 import { Search } from '../../Core/DataEntry/Search/Search'
+import { BEM } from '../../../services/BEMService'
 
 interface Props {
     className?: string
@@ -11,29 +11,25 @@ interface Props {
 }
 
 export class PageHeader extends React.Component<Props> {
+    private bem = new BEM('PageHeader')
+
     public render() {
-        const { onSearch } = this.props
+        const { className, onSearch } = this.props
 
         return (
             <AppBar
-                className={this.getClassName()}
+                className={this.bem.getClassName(className)}
                 position={`fixed`}
             >
                 <Typography
-                    className={`cm-PageHeader__title`}
+                    className={this.bem.getElement('title')}
                     component={`h1`}
                     variant={`h4`}
                 >
-                    Wikipedia Airplanes
+                    Collection manager
                 </Typography>
                 <Search onSearch={onSearch}/>
             </AppBar>
         )
-    }
-
-    private getClassName = () => {
-        const { className } = this.props
-
-        return c('cm-PageHeader', {}, className)
     }
 }

@@ -6,7 +6,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import FilterIcon from '@material-ui/icons/FilterList'
 import Typography from '@material-ui/core/Typography'
-import c from 'classnames'
+import { BEM } from '../../../../services/BEMService'
 
 interface Props {
     buttonText: string
@@ -22,27 +22,31 @@ export class Accordion extends React.Component<Props, State> {
         isExpanded: false,
     }
 
+    private bem = new BEM('Accordion', () => ({
+        'cm-Accordion--is-expanded': this.state.isExpanded,
+    }))
+
     public render() {
-        const { buttonText, children } = this.props
+        const { buttonText, children, className } = this.props
 
         return (
             <ExpansionPanel
-                className={this.getClassName()}
+                className={this.bem.getClassName(className)}
                 onChange={this.onChange}
             >
                 <ExpansionPanelSummary
-                    className={`cm-Accordion__header`}
+                    className={this.bem.getElement('header')}
                     expandIcon={<ExpandMoreIcon />}
                 >
-                    <FilterIcon className={`cm-Accordion__icon`}/>
+                    <FilterIcon className={this.bem.getElement('icon')}/>
                     <Typography
-                        className={`cm-Accordion__text`}
+                        className={this.bem.getElement('text')}
                         variant={`subheading`}
                     >
                         {buttonText}
                     </Typography>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails className={`cm-Accordion__content`}>
+                <ExpansionPanelDetails className={this.bem.getElement('content')}>
                     {children}
                 </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -51,14 +55,5 @@ export class Accordion extends React.Component<Props, State> {
 
     private onChange = (event: any, expanded: boolean) => {
         this.setState({ isExpanded: expanded })
-    }
-
-    private getClassName = () => {
-        const { className } = this.props
-        const { isExpanded } = this.state
-
-        return c('cm-Accordion', {
-            'cm-Accordion--is-expanded': isExpanded,
-        }, className)
     }
 }

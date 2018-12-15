@@ -1,6 +1,5 @@
-import './Form.scss'
 import * as React from 'react'
-import c from 'classnames'
+import { BEM } from '../../../../services/BEMService'
 
 type FormAutoCapitalizeType = 'none' | 'sentences' | 'words' | 'characters'
 type FormAutoCompleteType = 'off' | 'on'
@@ -29,12 +28,14 @@ export class Form extends React.Component<Props> {
         shouldPreventDefault: true,
     }
 
+    private bem = new BEM('Form')
+
     public render() {
         const { children, className, shouldPreventDefault, onSubmit, ...restProps } = this.props
 
         return (
             <form
-                className={this.getClassName()}
+                className={this.bem.getClassName(className)}
                 onSubmit={this.onSubmit}
                 {...restProps}
             >
@@ -53,11 +54,5 @@ export class Form extends React.Component<Props> {
         if (onSubmit) {
             onSubmit(event)
         }
-    }
-
-    private getClassName = () => {
-        const { className } = this.props
-
-        return c('cm-Form', {}, className)
     }
 }
