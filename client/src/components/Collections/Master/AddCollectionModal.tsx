@@ -33,9 +33,8 @@ export class AddCollectionModal extends React.Component<Props> {
                 title={`Add collection`}
             >
                 <AddCollectionMutation>
-                    {({ mutate, loading, error, data }: MutationContent) => (
+                    {({ mutate, loading, error }: MutationContent) => (
                         <Form onSubmit={this.onSubmit(mutate)} id={`addCollectionForm`}>
-                            {console.log(data)}
                             <FieldCollection>
                                 <FieldGroup title={`General`}>
                                     <Field isLabel={true} title={`Name`}>
@@ -76,7 +75,7 @@ export class AddCollectionModal extends React.Component<Props> {
                 [el.name]: el.value.trim(),
             }), {})
 
-        const data = await mutateFunction({
+        const response = await mutateFunction({
             variables: {
                 fields: {
                     name: fields.name,
@@ -84,6 +83,8 @@ export class AddCollectionModal extends React.Component<Props> {
             },
         })
 
-        console.log(data)
+        if (response && response.data && response.data.addCollection) {
+            console.log('Success')
+        }
     }
 }
