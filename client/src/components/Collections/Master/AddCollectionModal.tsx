@@ -45,7 +45,10 @@ export class AddCollectionModal extends React.Component<Props> {
                                 <FieldCollectionFooter>
                                     <List horizontal={true}>
                                         <ListItem right={true}>
-                                            <Button type={ButtonType.cancel}>
+                                            <Button
+                                                type={ButtonType.cancel}
+                                                onClick={onClose}
+                                            >
                                                 Cancel
                                             </Button>
                                         </ListItem>
