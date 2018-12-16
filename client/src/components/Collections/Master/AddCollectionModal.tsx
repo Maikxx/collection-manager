@@ -6,6 +6,10 @@ import { Field } from '../../Core/Field/Field/Field'
 import { Form } from '../../Core/DataEntry/Form/Form'
 import { FieldGroup } from '../../Core/Field/FieldGroup/FieldGroup'
 import { Input } from '../../Core/DataEntry/Input/Input'
+import { FieldCollectionFooter } from '../../Core/Field/FieldCollectionFooter/FieldCollectionFooter'
+import { List } from '../../Core/DataDisplay/List/List'
+import { ListItem } from '../../Core/DataDisplay/List/ListItem'
+import { Button, ButtonType } from '../../Core/Button/Button'
 
 interface Props {
     className?: string
@@ -23,8 +27,8 @@ export class AddCollectionModal extends React.Component<Props> {
             <Modal
                 className={this.bem.getClassName(className)}
                 open={isOpen}
-                title={`Add collection`}
                 onClose={onClose}
+                title={`Add collection`}
             >
                 <Form>
                     <FieldCollection>
@@ -33,6 +37,20 @@ export class AddCollectionModal extends React.Component<Props> {
                                 <Input name={`name`} type={`text`}/>
                             </Field>
                         </FieldGroup>
+                        <FieldCollectionFooter>
+                            <List horizontal={true}>
+                                <ListItem right={true}>
+                                    <Button type={ButtonType.cancel}>
+                                        Annuleren
+                                    </Button>
+                                </ListItem>
+                                <ListItem right={true}>
+                                    <Button type={ButtonType.confirm}>
+                                        Opslaan
+                                    </Button>
+                                </ListItem>
+                            </List>
+                        </FieldCollectionFooter>
                     </FieldCollection>
                 </Form>
             </Modal>
