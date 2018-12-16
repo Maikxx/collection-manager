@@ -9,12 +9,13 @@ type FormMethodType = 'post' | 'get' | 'dialog'
 type FormTarget = '_self' | '_blank' | '_parent' | '_top' | string
 
 interface Props {
-    action?: string
     acceptCharset?: string
+    action?: string
     autoCapitalize?: FormAutoCapitalizeType
     autocomplete?: FormAutoCompleteType
-    encType?: FormEncTypeType
     className?: string
+    encType?: FormEncTypeType
+    id?: string
     method?: FormMethodType
     name?: string
     noValidate?: boolean
@@ -32,7 +33,14 @@ export class Form extends React.Component<Props> {
     private bem = new BEM('Form')
 
     public render() {
-        const { children, className, shouldPreventDefault, onSubmit, ...restProps } = this.props
+        const {
+            children,
+            className,
+            onSubmit,
+            shouldPreventDefault,
+            // tslint:disable-next-line:trailing-comma
+            ...restProps
+        } = this.props
 
         return (
             <form

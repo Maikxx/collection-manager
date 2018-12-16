@@ -10,6 +10,8 @@ import { FieldCollectionFooter } from '../../Core/Field/FieldCollectionFooter/Fi
 import { List } from '../../Core/DataDisplay/List/List'
 import { ListItem } from '../../Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../Core/Button/Button'
+import { AddCollectionMutation, MutationContent } from '../Queries/AddCollectionMutation'
+import { MutationFunc } from 'react-apollo'
 
 interface Props {
     className?: string
@@ -30,30 +32,58 @@ export class AddCollectionModal extends React.Component<Props> {
                 onClose={onClose}
                 title={`Add collection`}
             >
-                <Form>
-                    <FieldCollection>
-                        <FieldGroup title={`General`}>
-                            <Field isLabel={true} title={`Name`}>
-                                <Input name={`name`} type={`text`}/>
-                            </Field>
-                        </FieldGroup>
-                        <FieldCollectionFooter>
-                            <List horizontal={true}>
-                                <ListItem right={true}>
-                                    <Button type={ButtonType.cancel}>
-                                        Annuleren
-                                    </Button>
-                                </ListItem>
-                                <ListItem right={true}>
-                                    <Button type={ButtonType.confirm}>
-                                        Opslaan
-                                    </Button>
-                                </ListItem>
-                            </List>
-                        </FieldCollectionFooter>
-                    </FieldCollection>
-                </Form>
+                <AddCollectionMutation>
+                    {({ mutate, loading, error, data }: MutationContent) => (
+                        <Form onSubmit={this.onSubmit(mutate)} id={`addCollectionForm`}>
+                            {console.log(data)}
+                            <FieldCollection>
+                                <FieldGroup title={`General`}>
+                                    <Field isLabel={true} title={`Name`}>
+                                        <Input name={`name`} type={`text`}/>
+                                    </Field>
+                                </FieldGroup>
+                                <FieldCollectionFooter>
+                                    <List horizontal={true}>
+                                        <ListItem right={true}>
+                                            <Button type={ButtonType.cancel}>
+                                                Cancel
+                                            </Button>
+                                        </ListItem>
+                                        <ListItem right={true}>
+                                            <Button
+                                                form={`addCollectionForm`}
+                                                type={ButtonType.confirm}
+                                                loading={loading}
+                                            >
+                                                Submit
+                                            </Button>
+                                        </ListItem>
+                                    </List>
+                                </FieldCollectionFooter>
+                            </FieldCollection>
+                        </Form>
+                    )}
+                </AddCollectionMutation>
             </Modal>
         )
+    }
+
+    private onSubmit = (mutateFunction: MutationFunc) => async (event: React.FormEvent<HTMLFormElement>) => {
+        const fields = Array.prototype.slice.call(event.target)
+            .filter((el: HTMLInputElement | HTMLTextAreaElement) => el.name)
+            .reduce((form: any, el: HTMLInputElement | HTMLTextAreaElement) => ({
+                ...form,
+                [el.name]: el.value.trim(),
+            }), {})
+
+        const data = await mutateFunction({
+            variables: {
+                fields: {
+                    name: fields.name,
+                },
+            },
+        })
+
+        console.log(data)
     }
 }
