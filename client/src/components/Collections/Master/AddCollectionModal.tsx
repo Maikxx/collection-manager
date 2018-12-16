@@ -5,6 +5,7 @@ import { FieldCollection } from '../../Core/Field/FieldCollection/FieldCollectio
 import { Field } from '../../Core/Field/Field/Field'
 import { Form } from '../../Core/DataEntry/Form/Form'
 import { FieldGroup } from '../../Core/Field/FieldGroup/FieldGroup'
+import { Input } from '../../Core/DataEntry/Input/Input'
 
 interface Props {
     className?: string
@@ -29,7 +30,7 @@ export class AddCollectionModal extends React.Component<Props> {
                     <FieldCollection>
                         <FieldGroup title={`General`}>
                             <Field isLabel={true} title={`Name`}>
-                                Hoooo
+                                <Input name={`name`} type={`text`}/>
                             </Field>
                         </FieldGroup>
                     </FieldCollection>
