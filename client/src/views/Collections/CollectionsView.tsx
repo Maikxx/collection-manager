@@ -8,10 +8,19 @@ import { Wrap } from '../../components/Core/Layout/Wrap/Wrap'
 import { List } from '../../components/Core/DataDisplay/List/List'
 import { ListItem } from '../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../components/Core/Button/Button'
+import { AddCollectionModal } from '../../components/Collections/Master/AddCollectionModal'
 
 interface Props {}
 
-export class CollectionsView extends React.Component<Props> {
+interface State {
+    showAddCollectionModal: boolean
+}
+
+export class CollectionsView extends React.Component<Props, State> {
+    public state: State = {
+        showAddCollectionModal: false,
+    }
+
     private bem = new BEM('CollectionsView')
 
     public render() {
@@ -28,16 +37,31 @@ export class CollectionsView extends React.Component<Props> {
     }
 
     private renderActionBar = () => {
+        const { showAddCollectionModal } = this.state
+
         return (
             <ActionBar>
                 <List horizontal={true}>
                     <ListItem right={true}>
-                        <Button type={ButtonType.action}>
+                        <Button
+                            type={ButtonType.action}
+                            onClick={this.toggleModal}
+                        >
                             Add collection
                         </Button>
+                        <AddCollectionModal
+                            isOpen={showAddCollectionModal}
+                            onClose={this.toggleModal}
+                        />
                     </ListItem>
                 </List>
             </ActionBar>
         )
+    }
+
+    private toggleModal = () => {
+        const { showAddCollectionModal } = this.state
+
+        this.setState({ showAddCollectionModal: !showAddCollectionModal })
     }
 }

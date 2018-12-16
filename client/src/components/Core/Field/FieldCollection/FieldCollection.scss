@@ -1,0 +1,8 @@
+.cm-FieldCollection {
+    display: flex;
+    flex-direction: column;
+
+    > .cm-Field + .cm-Field {
+        margin-top: 12px;
+    }
+}

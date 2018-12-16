@@ -1,4 +1,4 @@
-import './Row.scss'
+import './FieldCollection.scss'
 import * as React from 'react'
 import { BEM } from '../../../../services/BEMService'
 
@@ -6,11 +6,11 @@ interface Props {
     className?: string
 }
 
-export class Row extends React.PureComponent<Props> {
-    private bem = new BEM('Row')
+export class FieldCollection extends React.Component<Props> {
+    private bem = new BEM('FieldCollection')
 
     public render() {
-        const { children, className } = this.props
+        const { className, children } = this.props
 
         return (
             <div className={this.bem.getClassName(className)}>

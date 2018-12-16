@@ -1,3 +1,4 @@
+import './Form.scss'
 import * as React from 'react'
 import { BEM } from '../../../../services/BEMService'
 

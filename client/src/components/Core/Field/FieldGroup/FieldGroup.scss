@@ -1,0 +1,16 @@
+.cm-FieldGroup {
+    @import '../../../../scss/variables/colors';
+
+    &__title {
+        font-weight: 600;
+        flex: 1;
+        font-size: 1.3rem;
+        color: $color-medium-grey;
+    }
+
+    &__content {
+        padding-top: 24px;
+        flex: 5;
+        margin-left: 24px;
+    }
+}

@@ -1,0 +1,14 @@
+.cm-Field {
+    &__container {
+        width: 100%;
+    }
+
+    &__title {
+        font-weight: bold;
+        flex: 1;
+    }
+
+    &__content {
+        flex: 5;
+    }
+}
