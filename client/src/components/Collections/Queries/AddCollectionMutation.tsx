@@ -1,10 +1,12 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
 import { Mutation, MutationFunc } from 'react-apollo'
+import { ApolloError } from 'apollo-client'
 
 const ADD_COLLECTION_MUTATION = gql`
     mutation($fields: AddCollectionType) {
         addCollection(fields: $fields) {
+            id
             name
         }
     }
@@ -26,7 +28,7 @@ export interface MutationContent {
     mutate: MutationFunc
     loading: boolean
     data?: AddCollectionMutationResponse
-    error?: any
+    error?: ApolloError
 }
 
 interface Props {

@@ -51,6 +51,7 @@ export class CollectionsView extends React.Component<Props, State> {
                         </Button>
                         <AddCollectionModal
                             isOpen={showAddCollectionModal}
+                            onSubmitSuccess={this.toggleModal}
                             onClose={this.toggleModal}
                         />
                     </ListItem>

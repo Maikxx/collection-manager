@@ -16,6 +16,7 @@ import { MutationFunc } from 'react-apollo'
 interface Props {
     className?: string
     isOpen: boolean
+    onSubmitSuccess: () => void
     onClose: () => void
 }
 
@@ -68,6 +69,8 @@ export class AddCollectionModal extends React.Component<Props> {
     }
 
     private onSubmit = (mutateFunction: MutationFunc) => async (event: React.FormEvent<HTMLFormElement>) => {
+        const { onSubmitSuccess } = this.props
+
         const fields = Array.prototype.slice.call(event.target)
             .filter((el: HTMLInputElement | HTMLTextAreaElement) => el.name)
             .reduce((form: any, el: HTMLInputElement | HTMLTextAreaElement) => ({
@@ -85,6 +88,7 @@ export class AddCollectionModal extends React.Component<Props> {
 
         if (response && response.data && response.data.addCollection) {
             console.log('Success')
+            onSubmitSuccess()
         }
     }
 }
