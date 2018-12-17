@@ -3,9 +3,9 @@ export const routes = {
     collections: {
         index: '/collections',
         detail: {
-            index: '/detail',
-            data: (id: string | number = ':id') => `/detail/${id}`,
-            edit: (id: string | number = ':id') => `/detail/${id}/edit`,
+            index: '/collections/detail',
+            data: (id: string | number = ':id') => `/collections/detail/${id}`,
+            edit: (id: string | number = ':id') => `/collections/detail/${id}/edit`,
         },
     },
 }

@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { BEM } from '../../../../services/BEMService'
 import { RouteComponentProps } from 'react-router-dom'
+import { Page } from '../../../../components/Core/Layout/Page/Page'
+import { Wrap } from '../../../../components/Core/Layout/Wrap/Wrap'
 
 interface RouteParams {
     id: string
@@ -16,12 +18,13 @@ export class CollectionsDataView extends React.Component<Props> {
     public render() {
         const { className } = this.props
         const { id } = this.props.match.params
-        console.log(id)
 
         return (
-            <div className={this.bem.getClassName(className)}>
-                Dit is de detail page
-            </div>
+            <Page className={this.bem.getClassName(className)}>
+                <Wrap>
+                    Detail page for {id}
+                </Wrap>
+            </Page>
         )
     }
 }

@@ -1,0 +1,11 @@
+.cm-Header {
+    @import '../../../../scss/variables/colors';
+
+    width: 100%;
+    background-color: $color-medium-grey;
+    border-bottom: 1px solid $color-subtle;
+
+    .cm-BreadCrumbs {
+        padding: 30px 24px;
+    }
+}

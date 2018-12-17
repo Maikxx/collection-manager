@@ -8,7 +8,6 @@ import {
     ListCollectionsQueryResponse,
 } from '../../../components/Collections/Queries/ListCollectionsQuery'
 import { Loader } from '../../../components/Core/Feedback/Loader/Loader'
-import { PageHeader } from '../../../components/Chrome/PageHeader/PageHeader'
 import { Wrap } from '../../../components/Core/Layout/Wrap/Wrap'
 import { TableView } from '../../../components/Core/DataDisplay/Table/TableView/TableView'
 import { Table } from '../../../components/Core/DataDisplay/Table/Table/Table'
@@ -23,8 +22,12 @@ import { Button, ButtonType } from '../../../components/Core/Button/Button'
 import { AddCollectionModal } from '../../../components/Collections/Master/AddCollectionModal'
 import { routes } from '../../routes'
 import { TextLink } from '../../../components/Core/Text/TextLink/TextLink'
+import { Header } from '../../../components/Core/Layout/Header/Header'
+import { BreadCrumbs } from '../../../components/Core/Layout/BreadCrumbs/BreadCrumbs'
+import { BreadCrumb } from '../../../components/Core/Layout/BreadCrumbs/BreadCrumb'
+import { RouteComponentProps } from 'react-router-dom'
 
-interface Props {
+interface Props extends RouteComponentProps {
     className?: string
 }
 
@@ -44,6 +47,13 @@ export class CollectionsMasterView extends React.Component<Props, State> {
 
         return (
             <Page className={this.bem.getClassName(className)}>
+                <Header>
+                    <BreadCrumbs>
+                        <BreadCrumb>
+                            Collections
+                        </BreadCrumb>
+                    </BreadCrumbs>
+                </Header>
                 <ListCollectionsQuery>
                     {({ data, loading, error, refetch }: QueryContent) => {
                         if (loading || !data) {
@@ -52,7 +62,6 @@ export class CollectionsMasterView extends React.Component<Props, State> {
 
                         return (
                             <React.Fragment>
-                                <PageHeader />
                                 <Wrap>
                                     {this.renderActionBar(refetch)}
                                 </Wrap>

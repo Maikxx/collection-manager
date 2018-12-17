@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { BEM } from '../../services/BEMService'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, RouteComponentProps } from 'react-router-dom'
 import { CollectionsMasterView } from './Master/CollectionsMasterView'
 import { routes } from '../routes'
 import { CollectionsDetailView } from './Detail/CollectionsDetailView'
 
-interface Props {}
+interface Props extends RouteComponentProps {}
 
 export class CollectionsView extends React.Component<Props> {
     private bem = new BEM('CollectionsView')
@@ -21,7 +21,6 @@ export class CollectionsView extends React.Component<Props> {
                     />
                     <Route
                         path={routes.collections.detail.index}
-                        exact={true}
                         component={CollectionsDetailView}
                     />
                 </Switch>
