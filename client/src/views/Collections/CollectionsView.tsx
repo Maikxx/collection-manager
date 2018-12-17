@@ -3,6 +3,7 @@ import { BEM } from '../../services/BEMService'
 import { Switch, Route } from 'react-router-dom'
 import { CollectionsMasterView } from './Master/CollectionsMasterView'
 import { routes } from '../routes'
+import { CollectionsDetailView } from './Detail/CollectionsDetailView'
 
 interface Props {}
 
@@ -17,6 +18,11 @@ export class CollectionsView extends React.Component<Props> {
                         path={routes.collections.index}
                         exact={true}
                         component={CollectionsMasterView}
+                    />
+                    <Route
+                        path={routes.collections.detail.index}
+                        exact={true}
+                        component={CollectionsDetailView}
                     />
                 </Switch>
             </div>
