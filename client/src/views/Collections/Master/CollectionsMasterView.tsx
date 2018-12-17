@@ -21,8 +21,8 @@ import { List } from '../../../components/Core/DataDisplay/List/List'
 import { ListItem } from '../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../components/Core/Button/Button'
 import { AddCollectionModal } from '../../../components/Collections/Master/AddCollectionModal'
-import { Link } from 'react-router-dom'
 import { routes } from '../../routes'
+import { TextLink } from '../../../components/Core/Text/TextLink/TextLink'
 
 interface Props {
     className?: string
@@ -92,9 +92,9 @@ export class CollectionsMasterView extends React.Component<Props, State> {
         return collections.map(collection => (
             <TableRow key={collection._id}>
                 <TableCell>
-                    <Link to={routes.collections.detail.data(collection._id)}>
+                    <TextLink to={routes.collections.detail.data(collection._id)}>
                         {collection.name}
-                    </Link>
+                    </TextLink>
                 </TableCell>
                 <TableCell>
                     {collection.createdAt}

@@ -1,6 +1,4 @@
-import './TableHead.scss'
 import * as React from 'react'
-import { BEM } from '../../../../../services/BEMService'
 import { TableHead as MaterialTableHead } from '@material-ui/core'
 
 interface Props {
@@ -8,13 +6,11 @@ interface Props {
 }
 
 export class TableHead extends React.Component<Props> {
-    private bem = new BEM('TableHead')
-
     public render() {
-        const { className, children } = this.props
+        const { children } = this.props
 
         return (
-            <MaterialTableHead className={this.bem.getClassName(className)}>
+            <MaterialTableHead>
                 {children}
             </MaterialTableHead>
         )

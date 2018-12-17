@@ -1,0 +1,12 @@
+.cm-TextLink {
+    @import '../../../../scss/variables/colors';
+
+    text-decoration: none;
+    color: $color-link;
+    font-weight: 600;
+    transition: .1s all ease-in-out;
+
+    &:hover {
+        color: darken($color-link, 20);
+    }
+}

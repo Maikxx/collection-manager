@@ -1,1 +1,7 @@
-.cm-Table {}
+.cm-Table {
+    @import '../../../../../scss/variables/colors';
+
+    thead > .cm-TableRow {
+        border-bottom: 3px solid $color-light-grey;
+    }
+}
