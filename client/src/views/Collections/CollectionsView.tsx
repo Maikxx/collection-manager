@@ -105,16 +105,21 @@ export class CollectionsView extends React.Component<Props, State> {
                         </Button>
                         <AddCollectionModal
                             isOpen={showAddCollectionModal}
-                            onSubmitSuccess={() => {
-                                this.toggleModal()
-                                refetch()
-                            }}
+                            onSubmitSuccess={() => this.onSubmitSuccess(refetch)}
                             onClose={this.toggleModal}
                         />
                     </ListItem>
                 </List>
             </ActionBar>
         )
+    }
+
+    private onSubmitSuccess = (refetch?: RefetchFunction) => {
+        this.toggleModal()
+
+        if (refetch) {
+            refetch()
+        }
     }
 
     private toggleModal = () => {

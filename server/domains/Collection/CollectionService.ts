@@ -1,7 +1,7 @@
 import { AddCollectionFields } from '../../api/collection/Collection.type'
 import { Collection } from '../../models/Collection'
 import { ApolloError } from 'apollo-server-express'
-import { Types as MongooseTypes, Document } from 'mongoose'
+import { Types as MongooseTypes } from 'mongoose'
 
 export const CollectionService = () => {
     const AddCollection = async (args: AddCollectionFields) => {

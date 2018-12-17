@@ -90,7 +90,6 @@ export class AddCollectionModal extends React.Component<Props> {
         })
 
         if (response && response.data && response.data.addCollection) {
-            console.log('Success')
             onSubmitSuccess()
         }
     }
