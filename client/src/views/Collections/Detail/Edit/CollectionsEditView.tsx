@@ -17,6 +17,7 @@ import { routes } from '../../../routes'
 import { List } from '../../../../components/Core/DataDisplay/List/List'
 import { ListItem } from '../../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../../components/Core/Button/Button'
+import { Input } from '../../../../components/Core/DataEntry/Input/Input'
 
 const GET_COLLECTION_QUERY = gql`
     query($byId: MongoID) {
@@ -35,7 +36,7 @@ interface QueryResponse {
     getCollection?: {
         _id: string
         name: string
-        createdAt?: Date
+        createdAt?: string
     }
 }
 
@@ -47,8 +48,8 @@ interface Props extends RouteComponentProps<RouteParams> {
     className?: string
 }
 
-export class CollectionsDataView extends React.Component<Props> {
-    private bem = new BEM('CollectionsDataView')
+export class CollectionsEditView extends React.Component<Props> {
+    private bem = new BEM('CollectionsEditView')
 
     public render() {
         const { className } = this.props
@@ -97,10 +98,19 @@ export class CollectionsDataView extends React.Component<Props> {
                                     <FieldCollection>
                                         <FieldGroup title={`General`}>
                                             <Field title={`Name`}>
-                                                {name}
+                                                <Input
+                                                    name={`name`}
+                                                    type={`text`}
+                                                    defaultValue={name}
+                                                />
                                             </Field>
                                             <Field title={`Created at`}>
-                                                {createdAt}
+                                                <Input
+                                                    name={`createdAt`}
+                                                    type={`date`}
+                                                    defaultValue={createdAt}
+                                                    disabled={true}
+                                                />
                                             </Field>
                                         </FieldGroup>
                                     </FieldCollection>
@@ -119,12 +129,28 @@ export class CollectionsDataView extends React.Component<Props> {
 
         return (
             <List horizontal={true}>
+                <ListItem>
+                    <Button
+                        onClick={() => console.log('TODO')}
+                        type={ButtonType.danger}
+                    >
+                        Delete
+                    </Button>
+                </ListItem>
                 <ListItem right={true}>
                     <Button
-                        onClick={() => history.push(routes.collections.detail.edit(id))}
-                        type={ButtonType.action}
+                        onClick={() => history.push(routes.collections.detail.data(id))}
+                        type={ButtonType.cancel}
                     >
-                        Edit collection
+                        Cancel
+                    </Button>
+                </ListItem>
+                <ListItem right={true}>
+                    <Button
+                        onClick={() => console.log('TODO')}
+                        type={ButtonType.confirm}
+                    >
+                        Save
                     </Button>
                 </ListItem>
             </List>

@@ -1,7 +1,7 @@
 .cm-FieldGroup {
     @import '../../../../scss/variables/colors';
 
-    .cm-Row {
+    > .cm-Row {
         align-items: unset;
     }
 

@@ -8,6 +8,7 @@ interface Props {
     defaultValue?: string | number
     name: string
     type: string
+    disabled?: boolean
 }
 
 export class Input extends React.Component<Props> {

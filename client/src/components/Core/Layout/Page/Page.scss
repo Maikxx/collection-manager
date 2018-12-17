@@ -1,4 +1,7 @@
 .cm-Page {
+    @import '../../../../scss/variables/colors';
+
+    $header-height: 63px;
     position: relative;
 
     .cm-Loader {
@@ -9,6 +12,21 @@
     }
 
     &--has-page-header {
-        padding-top: 63px;
+        padding-top: $header-height;
+    }
+
+    &--has-page-actions {
+        > .cm-Wrap:last-child {
+            border-top: 1px solid $color-dark-grey;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+
+    &--has-page-actions.cm-Page--has-page-header {
+        padding-top: unset;
+        height: calc(100vh - #{$header-height});
     }
 }
