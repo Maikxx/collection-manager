@@ -8,4 +8,8 @@
     .cm-BreadCrumbs {
         padding: 30px 24px;
     }
+
+    .cm-ListItem + .cm-ListItem {
+        margin-left: unset;
+    }
 }

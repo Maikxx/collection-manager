@@ -1,22 +1,22 @@
 .cm-BreadCrumbs {
     @import '../../../../scss/variables/colors';
 
-    .cm-Crumb {
+    .cm-BreadCrumb {
         &:not(:last-child) {
-            .cm-Link:hover{
-                color: rgba($color-text, .7);
+            .cm-TextLink:hover{
+                color: rgba($color-dark-grey, .7);
             }
 
             &::after {
                 content: '\00a0';
-                background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><polygon fill='#C4C8CC' points='4 12.735 5.265 14 11.265 8 5.265 2 4 3.265 8.735 8'/></svg>"), $color-background;
+                background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><polygon fill='#393E46' points='4 12.735 5.265 14 11.265 8 5.265 2 4 3.265 8.735 8'/></svg>"), $color-medium-grey;
                 background-size: contain;
                 background-position: center bottom;
                 background-repeat: no-repeat;
                 height: 100%;
                 width: 18px;
-                margin-right: getSpacing(1) / 2;
-                margin-left: getSpacing(1) / 2;
+                margin-right: 12px;
+                margin-left: 12px;
                 color: $color-subtle;
                 display: inline-block;
             }

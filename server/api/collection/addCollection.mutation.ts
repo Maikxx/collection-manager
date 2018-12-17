@@ -1,5 +1,11 @@
-import { CollectionType, AddCollectionType, AddCollectionFields } from './Collection.type'
+import { CollectionType, AddCollectionType } from './Collection.type'
 import { CollectionService } from '../../domains/Collection/CollectionService'
+
+export interface AddCollectionFields {
+    fields: {
+        name: string
+    }
+}
 
 export const addCollection = () => ({
     type: CollectionType,

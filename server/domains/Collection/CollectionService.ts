@@ -1,7 +1,8 @@
-import { AddCollectionFields } from '../../api/collection/Collection.type'
 import { Collection } from '../../models/Collection'
 import { ApolloError } from 'apollo-server-express'
 import { Types as MongooseTypes } from 'mongoose'
+import { AddCollectionFields } from '../../api/collection/addCollection.mutation'
+import { GetCollectionArgs } from '../../api/collection/getCollection.query'
 
 export const CollectionService = () => {
     const AddCollection = async (args: AddCollectionFields) => {
@@ -30,8 +31,21 @@ export const CollectionService = () => {
         return docs
     }
 
+    const GetCollection = async (args: GetCollectionArgs) => {
+        const { byId } = args
+
+        const doc = await Collection.find({ _id: byId })
+
+        if (!doc || !doc.length) {
+            throw new ApolloError('Document does not exist', '404')
+        }
+
+        return doc[0]
+    }
+
     return {
         AddCollection,
         ListCollections,
+        GetCollection,
     }
 }

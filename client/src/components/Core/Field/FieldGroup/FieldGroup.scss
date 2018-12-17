@@ -1,6 +1,10 @@
 .cm-FieldGroup {
     @import '../../../../scss/variables/colors';
 
+    .cm-Row {
+        align-items: unset;
+    }
+
     &__title {
         font-weight: 600;
         flex: 1;
@@ -9,8 +13,12 @@
     }
 
     &__content {
-        padding-top: 24px;
+        padding-top: 12px;
         flex: 5;
         margin-left: 24px;
+    }
+
+    .cm-Field + .cm-Field {
+        margin-top: 12px;
     }
 }

@@ -1,13 +1,18 @@
 .cm-BreadCrumb {
+    @import '../../../../scss/variables/colors';
+
     font-size: 18px;
     font-weight: 400;
+    position: relative;
 
-    .cm-Link {
-        color: #A8AEB3;
+    .cm-TextLink {
+        color: $color-dark-grey;
     }
 
     .cm-Loader {
-        height: 18px;
-        width: 18px;
+        height: 20px;
+        width: 20px;
+        top: 30%;
+        transform: translateX(-50%);
     }
 }
