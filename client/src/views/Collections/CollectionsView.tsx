@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Page } from '../../components/Core/Layout/Page/Page'
 import { BEM } from '../../services/BEMService'
-import { ListCollectionsQuery, QueryContent, ListCollectionsQueryResponse } from '../../components/Collections/Queries/ListCollectionsQuery'
+import { ListCollectionsQuery, QueryContent, ListCollectionsQueryResponse, RefetchFunction } from '../../components/Collections/Queries/ListCollectionsQuery'
 import { PageHeader } from '../../components/Chrome/PageHeader/PageHeader'
 import { ActionBar } from '../../components/Chrome/ActionBar/ActionBar'
 import { Wrap } from '../../components/Core/Layout/Wrap/Wrap'
@@ -33,37 +33,39 @@ export class CollectionsView extends React.Component<Props, State> {
     public render() {
         return (
             <Page className={this.bem.getClassName()}>
-                <PageHeader />
-                <Wrap>
-                    {this.renderActionBar()}
-                </Wrap>
-                <TableView>
-                    <ListCollectionsQuery>
-                        {({ data, loading, error }: QueryContent) => {
-                            if (loading || !data) {
-                                return <Loader />
-                            }
+                <ListCollectionsQuery>
+                    {({ data, loading, error, refetch }: QueryContent) => {
+                        if (loading || !data) {
+                            return <Loader />
+                        }
 
-                            return (
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>
-                                                Name
-                                            </TableCell>
-                                            <TableCell>
-                                                Created at
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {this.renderTableRows(data)}
-                                    </TableBody>
-                                </Table>
-                            )
-                        }}
-                    </ListCollectionsQuery>
-                </TableView>
+                        return (
+                            <React.Fragment>
+                                <PageHeader />
+                                <Wrap>
+                                    {this.renderActionBar(refetch)}
+                                </Wrap>
+                                <TableView>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>
+                                                    Name
+                                                </TableCell>
+                                                <TableCell>
+                                                    Created at
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {this.renderTableRows(data)}
+                                        </TableBody>
+                                    </Table>
+                                </TableView>
+                            </React.Fragment>
+                        )
+                    }}
+                </ListCollectionsQuery>
             </Page>
         )
     }
@@ -88,7 +90,7 @@ export class CollectionsView extends React.Component<Props, State> {
         ))
     }
 
-    private renderActionBar = () => {
+    private renderActionBar = (refetch?: RefetchFunction) => {
         const { showAddCollectionModal } = this.state
 
         return (
@@ -103,7 +105,10 @@ export class CollectionsView extends React.Component<Props, State> {
                         </Button>
                         <AddCollectionModal
                             isOpen={showAddCollectionModal}
-                            onSubmitSuccess={this.toggleModal}
+                            onSubmitSuccess={() => {
+                                this.toggleModal()
+                                refetch()
+                            }}
                             onClose={this.toggleModal}
                         />
                     </ListItem>

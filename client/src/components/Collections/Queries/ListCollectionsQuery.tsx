@@ -1,7 +1,7 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
-import { ApolloError } from 'apollo-client'
+import { Query, OperationVariables } from 'react-apollo'
+import { ApolloError, ApolloQueryResult } from 'apollo-client'
 
 const LIST_COLLECTIONS_QUERY = gql`
     query {
@@ -29,10 +29,13 @@ export interface ListCollectionsQueryResponse {
     }
 }
 
+export type RefetchFunction = (variables?: OperationVariables) => Promise<ApolloQueryResult<ListCollectionsQueryResponse>>
+
 export interface QueryContent {
     loading: boolean
     error?: ApolloError
     data?: ListCollectionsQueryResponse
+    refetch?: RefetchFunction
 }
 
 export class ListCollectionsQuery extends React.Component<Props> {
@@ -41,7 +44,7 @@ export class ListCollectionsQuery extends React.Component<Props> {
 
         return (
             <Query query={LIST_COLLECTIONS_QUERY}>
-                {({ loading, error, data }) => children({ loading, error, data })}
+                {({ loading, error, data, refetch }) => children({ loading, error, data, refetch })}
             </Query>
         )
     }
