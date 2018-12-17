@@ -5,7 +5,11 @@ import { Query } from 'react-apollo'
 const LIST_COLLECTIONS_QUERY = gql`
     query {
         listCollections {
-            name
+            nodes {
+                _id
+                createdAt
+                name
+            }
         }
     }
 `

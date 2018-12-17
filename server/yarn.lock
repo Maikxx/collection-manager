@@ -92,6 +92,10 @@
   dependencies:
     "@types/node" "*"
 
+"@types/es6-shim@^0.31.39":
+  version "0.31.39"
+  resolved "https://registry.yarnpkg.com/@types/es6-shim/-/es6-shim-0.31.39.tgz#61de60fac180f967177bcde598a62072a39ea04b"
+
 "@types/events@*":
   version "1.2.0"
   resolved "http://registry.npmjs.org/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
@@ -111,6 +115,16 @@
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
+
+"@types/graphql-iso-date@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@types/graphql-iso-date/-/graphql-iso-date-3.3.1.tgz#dbb540ae62c68c00eba1d1feb4602d7209257e9d"
+  dependencies:
+    "@types/graphql" "*"
+
+"@types/graphql@*":
+  version "14.0.3"
+  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.3.tgz#389e2e5b83ecdb376d9f98fae2094297bc112c1c"
 
 "@types/helmet@^0.0.42":
   version "0.0.42"
@@ -1045,6 +1059,10 @@ graphql-extensions@0.4.1:
   resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.4.1.tgz#92c49a8409ffbfb24559d7661ab60cc90d6086e4"
   dependencies:
     "@apollographql/apollo-tools" "^0.2.6"
+
+graphql-iso-date@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/graphql-iso-date/-/graphql-iso-date-3.6.1.tgz#bd2d0dc886e0f954cbbbc496bbf1d480b57ffa96"
 
 graphql-subscriptions@^1.0.0:
   version "1.0.0"

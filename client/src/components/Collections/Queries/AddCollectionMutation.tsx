@@ -6,8 +6,7 @@ import { ApolloError } from 'apollo-client'
 const ADD_COLLECTION_MUTATION = gql`
     mutation($fields: AddCollectionType) {
         addCollection(fields: $fields) {
-            id
-            name
+            _id
         }
     }
 `
