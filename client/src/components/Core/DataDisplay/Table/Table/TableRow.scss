@@ -1,0 +1,7 @@
+.cm-TableRow {
+    @import '../../../../../scss/variables/colors';
+
+    &:nth-of-type(even) {
+        background-color: $color-light-grey,
+    }
+}
