@@ -5,11 +5,18 @@ import ReactDOM from 'react-dom'
 import { RootView } from './views/RootView'
 import { ApolloProvider } from 'react-apollo'
 import { client } from './services/ApolloService'
+import { BrowserRouter, Route } from 'react-router-dom'
+import { routes } from './views/routes'
 
 const App: React.SFC = () => (
-    <ApolloProvider client={client}>
-        <RootView />
-    </ApolloProvider>
+    <BrowserRouter>
+        <ApolloProvider client={client}>
+            <Route
+                path={routes.index}
+                component={RootView}
+            />
+        </ApolloProvider>
+    </BrowserRouter>
 )
 
 const rootElement = document.getElementById('react-root')
