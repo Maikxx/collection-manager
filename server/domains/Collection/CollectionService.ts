@@ -3,6 +3,7 @@ import { ApolloError } from 'apollo-server-express'
 import { Types as MongooseTypes } from 'mongoose'
 import { AddCollectionFields } from '../../api/collection/addCollection.mutation'
 import { GetCollectionArgs } from '../../api/collection/getCollection.query'
+import { DeleteCollectionFields } from '../../api/collection/deleteCollection.mutation'
 
 export const CollectionService = () => {
     const AddCollection = async (args: AddCollectionFields) => {
@@ -25,10 +26,26 @@ export const CollectionService = () => {
         return databaseData
     }
 
-    const ListCollections = async (args: any) => {
+    const ListCollections = async () => {
         const docs = await Collection.find({})
 
         return docs
+    }
+
+    const DeleteCollection = async (args: DeleteCollectionFields) => {
+        const { _id } = args
+        const doc = await Collection.find({ _id })
+
+        if (!doc || !doc.length) {
+            throw new ApolloError('Document does not exist', '404')
+        }
+
+        await Collection.find({ _id }).remove()
+        console.log(await Collection.find({ _id }).remove())
+
+        return {
+            success: true,
+        }
     }
 
     const GetCollection = async (args: GetCollectionArgs) => {
@@ -47,5 +64,6 @@ export const CollectionService = () => {
         AddCollection,
         ListCollections,
         GetCollection,
+        DeleteCollection,
     }
 }

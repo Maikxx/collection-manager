@@ -2,6 +2,7 @@ import { GraphQLSchema, GraphQLObjectType } from 'graphql'
 import { listCollections } from './collection/listCollections.query'
 import { addCollection } from './collection/addCollection.mutation'
 import { getCollection } from './collection/getCollection.query'
+import { deleteCollection } from './collection/deleteCollection.mutation'
 
 export const createSchema = () => new GraphQLSchema({
     query: new GraphQLObjectType({
@@ -15,6 +16,7 @@ export const createSchema = () => new GraphQLSchema({
         name: 'Mutation',
         fields: () => ({
             addCollection: addCollection(),
+            deleteCollection: deleteCollection(),
         }),
     }),
 })

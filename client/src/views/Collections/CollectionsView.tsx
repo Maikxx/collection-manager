@@ -4,11 +4,13 @@ import { Switch, Route, RouteComponentProps } from 'react-router-dom'
 import { CollectionsMasterView } from './Master/CollectionsMasterView'
 import { routes } from '../routes'
 import { CollectionsDetailView } from './Detail/CollectionsDetailView'
+import { RefetchFunction } from '../../components/Collections/Queries/ListCollectionsQuery'
 
 interface Props extends RouteComponentProps {}
 
 export class CollectionsView extends React.Component<Props> {
     private bem = new BEM('CollectionsView')
+    private refetchFunction: RefetchFunction
 
     public render() {
         return (
@@ -17,11 +19,21 @@ export class CollectionsView extends React.Component<Props> {
                     <Route
                         path={routes.collections.index}
                         exact={true}
-                        component={CollectionsMasterView}
+                        render={routeProps => (
+                            <CollectionsMasterView
+                                {...routeProps}
+                                onQueryLoaded={refetchFunction => this.refetchFunction = refetchFunction}
+                            />
+                        )}
                     />
                     <Route
                         path={routes.collections.detail.index}
-                        component={CollectionsDetailView}
+                        render={routeProps => (
+                            <CollectionsDetailView
+                                {...routeProps}
+                                refetch={this.refetchFunction}
+                            />
+                        )}
                     />
                 </Switch>
             </div>

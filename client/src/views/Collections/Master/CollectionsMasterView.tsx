@@ -29,6 +29,7 @@ import { RouteComponentProps } from 'react-router-dom'
 
 interface Props extends RouteComponentProps {
     className?: string
+    onQueryLoaded?: (refetchFunction: RefetchFunction) => void
 }
 
 interface State {
@@ -43,7 +44,7 @@ export class CollectionsMasterView extends React.Component<Props, State> {
     private bem = new BEM('CollectionsMasterView')
 
     public render() {
-        const { className } = this.props
+        const { className, onQueryLoaded } = this.props
 
         return (
             <Page className={this.bem.getClassName(className)}>
@@ -58,6 +59,10 @@ export class CollectionsMasterView extends React.Component<Props, State> {
                     {({ data, loading, error, refetch }: QueryContent) => {
                         if (loading || !data) {
                             return <Loader />
+                        }
+
+                        if (refetch && onQueryLoaded) {
+                            onQueryLoaded(refetch)
                         }
 
                         return (

@@ -6,7 +6,7 @@ import { Wrap } from '../../../../components/Core/Layout/Wrap/Wrap'
 import { Header } from '../../../../components/Core/Layout/Header/Header'
 import { BreadCrumbs } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumbs'
 import { BreadCrumb } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumb'
-import { Query } from 'react-apollo'
+import { Query, Mutation, MutationFn } from 'react-apollo'
 import gql from 'graphql-tag'
 import { FieldCollection } from '../../../../components/Core/Field/FieldCollection/FieldCollection'
 import { FieldGroup } from '../../../../components/Core/Field/FieldGroup/FieldGroup'
@@ -18,6 +18,7 @@ import { List } from '../../../../components/Core/DataDisplay/List/List'
 import { ListItem } from '../../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../../components/Core/Button/Button'
 import { Input } from '../../../../components/Core/DataEntry/Input/Input'
+import { RefetchFunction } from '../../../../components/Collections/Queries/ListCollectionsQuery'
 
 const GET_COLLECTION_QUERY = gql`
     query($byId: MongoID) {
@@ -28,6 +29,15 @@ const GET_COLLECTION_QUERY = gql`
         }
     }
 `
+
+const DELETE_COLLECTION_MUTATION = gql`
+    mutation($_id: MongoID) {
+        deleteCollection(_id: $_id) {
+            success
+        }
+    }
+`
+
 interface QueryVariables {
     byId: string
 }
@@ -40,12 +50,23 @@ interface QueryResponse {
     }
 }
 
+interface DeleteCollectionMutationReponse {
+    deleteCollection?: {
+        success?: boolean
+    }
+}
+
+interface DeleteCollectionMutationVariables {
+    _id: string
+}
+
 interface RouteParams {
     id: string
 }
 
 interface Props extends RouteComponentProps<RouteParams> {
     className?: string
+    refetch?: RefetchFunction
 }
 
 export class CollectionsEditView extends React.Component<Props> {
@@ -130,12 +151,19 @@ export class CollectionsEditView extends React.Component<Props> {
         return (
             <List horizontal={true}>
                 <ListItem>
-                    <Button
-                        onClick={() => console.log('TODO')}
-                        type={ButtonType.danger}
+                    <Mutation<DeleteCollectionMutationReponse, DeleteCollectionMutationVariables>
+                        mutation={DELETE_COLLECTION_MUTATION}
                     >
-                        Delete
-                    </Button>
+                        {(mutate, { loading }) => (
+                            <Button
+                                onClick={() => this.onDelete(mutate)}
+                                type={ButtonType.danger}
+                                loading={loading}
+                            >
+                                Delete
+                            </Button>
+                        )}
+                    </Mutation>
                 </ListItem>
                 <ListItem right={true}>
                     <Button
@@ -155,5 +183,20 @@ export class CollectionsEditView extends React.Component<Props> {
                 </ListItem>
             </List>
         )
+    }
+
+    private onDelete = async (mutateDelete: MutationFn) => {
+        const { history, match, refetch } = this.props
+        const { id } = match.params
+
+        const response = await mutateDelete({ variables: { _id: id }})
+
+        if (response && response.data && response.data.deleteCollection) {
+            if (refetch) {
+                refetch({ silent: true })
+            }
+
+            history.push(routes.collections.index)
+        }
     }
 }

@@ -6,7 +6,7 @@ export const listCollections = () => ({
     resolve: async (root, args) => {
         const collectionService = CollectionService()
 
-        const nodes = await collectionService.ListCollections(args)
+        const nodes = await collectionService.ListCollections()
         return {
             nodes: nodes,
         }
