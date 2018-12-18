@@ -41,7 +41,6 @@ export const CollectionService = () => {
         }
 
         await Collection.find({ _id }).remove()
-        console.log(await Collection.find({ _id }).remove())
 
         return {
             success: true,
