@@ -2,7 +2,7 @@ import { CollectionType, AddCollectionType } from './Collection.type'
 import { CollectionService } from '../../domains/Collection/CollectionService'
 
 export interface AddCollectionFields {
-    fields: {
+    collection: {
         name: string
     }
 }
@@ -10,9 +10,9 @@ export interface AddCollectionFields {
 export const addCollection = () => ({
     type: CollectionType,
     args: {
-        fields: { type: AddCollectionType },
+        collection: { type: AddCollectionType },
     },
-    resolve: (root, args: AddCollectionFields) => {
+    resolve: (_, args: AddCollectionFields) => {
         const collectionService = CollectionService()
 
         return collectionService.AddCollection(args)

@@ -11,7 +11,7 @@ export const deleteCollection = () => ({
     args: {
         _id: { type: MongoID },
     },
-    resolve: (root, args: DeleteCollectionFields) => {
+    resolve: (_, args: DeleteCollectionFields) => {
         const collectionService = CollectionService()
 
         return collectionService.DeleteCollection(args)

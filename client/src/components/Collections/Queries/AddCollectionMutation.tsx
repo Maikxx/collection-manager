@@ -4,8 +4,8 @@ import { Mutation, MutationFunc } from 'react-apollo'
 import { ApolloError } from 'apollo-client'
 
 const ADD_COLLECTION_MUTATION = gql`
-    mutation($fields: AddCollectionType) {
-        addCollection(fields: $fields) {
+    mutation($collection: AddCollectionType!) {
+        addCollection(collection: $collection) {
             _id
         }
     }
@@ -19,7 +19,7 @@ export interface AddCollectionMutationVariables {
 
 export interface AddCollectionMutationResponse {
     collection: {
-        id: string
+        _id: string
     }
 }
 

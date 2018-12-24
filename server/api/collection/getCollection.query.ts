@@ -11,7 +11,7 @@ export const getCollection = () => ({
     args: {
         byId: { type: MongoID },
     },
-    resolve: async (root, args) => {
+    resolve: async (_, args) => {
         const collectionService = CollectionService()
 
         const collection = await collectionService.GetCollection(args)

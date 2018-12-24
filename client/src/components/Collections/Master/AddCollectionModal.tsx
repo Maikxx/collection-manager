@@ -80,7 +80,7 @@ export class AddCollectionModal extends React.Component<Props> {
 
         const response = await mutateFunction({
             variables: {
-                fields: {
+                collection: {
                     name: fields.name,
                 },
             },

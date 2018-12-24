@@ -4,10 +4,11 @@ import { Types as MongooseTypes } from 'mongoose'
 import { AddCollectionFields } from '../../api/collection/addCollection.mutation'
 import { GetCollectionArgs } from '../../api/collection/getCollection.query'
 import { DeleteCollectionFields } from '../../api/collection/deleteCollection.mutation'
+import { EditCollectionArgs } from '../../api/collection/editCollection.mutation'
 
 export const CollectionService = () => {
     const AddCollection = async (args: AddCollectionFields) => {
-        const { name } = args.fields
+        const { name } = args.collection
 
         const existingDocumentWithName = await Collection
             .findOne({ name: { $regex: new RegExp(name, 'i') }})
@@ -59,10 +60,15 @@ export const CollectionService = () => {
         return doc[0]
     }
 
+    const EditCollection = async (args: EditCollectionArgs) => {
+        const { collection } = args
+    }
+
     return {
         AddCollection,
-        ListCollections,
-        GetCollection,
         DeleteCollection,
+        GetCollection,
+        EditCollection,
+        ListCollections,
     }
 }
