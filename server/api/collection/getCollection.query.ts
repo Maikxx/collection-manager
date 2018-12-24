@@ -1,6 +1,7 @@
 import { CollectionType } from './Collection.type'
 import { CollectionService } from '../../domains/Collection/CollectionService'
 import { MongoID } from '../../scalars/MongoID'
+import { GraphQLNonNull } from 'graphql'
 
 export interface GetCollectionArgs {
     byId: string
@@ -9,7 +10,7 @@ export interface GetCollectionArgs {
 export const getCollection = () => ({
     type: CollectionType,
     args: {
-        byId: { type: MongoID },
+        byId: { type: GraphQLNonNull(MongoID) },
     },
     resolve: async (_, args) => {
         const collectionService = CollectionService()

@@ -6,8 +6,7 @@ import { Wrap } from '../../../../components/Core/Layout/Wrap/Wrap'
 import { Header } from '../../../../components/Core/Layout/Header/Header'
 import { BreadCrumbs } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumbs'
 import { BreadCrumb } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumb'
-import { Query, Mutation, MutationFn } from 'react-apollo'
-import gql from 'graphql-tag'
+import { MutationFn, MutationFunc } from 'react-apollo'
 import { FieldCollection } from '../../../../components/Core/Field/FieldCollection/FieldCollection'
 import { FieldGroup } from '../../../../components/Core/Field/FieldGroup/FieldGroup'
 import { Field } from '../../../../components/Core/Field/Field/Field'
@@ -18,47 +17,10 @@ import { List } from '../../../../components/Core/DataDisplay/List/List'
 import { ListItem } from '../../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../../components/Core/Button/Button'
 import { Input } from '../../../../components/Core/DataEntry/Input/Input'
-import { RefetchFunction } from '../../../../components/Collections/Queries/ListCollectionsQuery'
-
-const GET_COLLECTION_QUERY = gql`
-    query($byId: MongoID) {
-        getCollection(byId: $byId) {
-            _id
-            name
-            createdAt
-        }
-    }
-`
-
-const DELETE_COLLECTION_MUTATION = gql`
-    mutation($_id: MongoID) {
-        deleteCollection(_id: $_id) {
-            success
-        }
-    }
-`
-
-interface QueryVariables {
-    byId: string
-}
-
-interface QueryResponse {
-    getCollection?: {
-        _id: string
-        name: string
-        createdAt?: string
-    }
-}
-
-interface DeleteCollectionMutationReponse {
-    deleteCollection?: {
-        success?: boolean
-    }
-}
-
-interface DeleteCollectionMutationVariables {
-    _id: string
-}
+import { RefetchFunction, QueryContent, MutationContent } from '../../../../types/Apollo'
+import { DeleteCollectionMutation, DeleteCollectionMutationResponse } from '../../../../components/Collections/Queries/DeleteCollectionMutation'
+import { ListCollectionsQueryResponse } from '../../../../components/Collections/Queries/ListCollectionsQuery'
+import { GetCollectionQuery, GetCollectionQueryResponse } from '../../../../components/Collections/Queries/GetCollectionQuery'
 
 interface RouteParams {
     id: string
@@ -66,7 +28,7 @@ interface RouteParams {
 
 interface Props extends RouteComponentProps<RouteParams> {
     className?: string
-    refetch?: RefetchFunction
+    refetch?: RefetchFunction<ListCollectionsQueryResponse>
 }
 
 export class CollectionsEditView extends React.Component<Props> {
@@ -82,65 +44,62 @@ export class CollectionsEditView extends React.Component<Props> {
                 hasPageHeader={true}
                 renderPageActions={this.renderPageActions}
             >
-                <Query<QueryResponse, QueryVariables>
-                    query={GET_COLLECTION_QUERY}
-                    variables={{ byId: id }}
-                >
-                    {({ data, loading }) => {
-                        if (loading) {
-                            return (
-                                <Loader />
-                            )
-                        }
-
-                        if (!data) {
-                            return 'No collection could be found'
-                        }
-
-                        const { getCollection } = data
-                        const name = getCollection && getCollection.name
-                        const createdAt = getCollection && getCollection.createdAt
-
-                        return (
-                            <React.Fragment>
-                                <Header>
-                                    <BreadCrumbs>
-                                        <BreadCrumb>
-                                            <TextLink to={routes.collections.index}>
-                                                Collections
-                                            </TextLink>
-                                        </BreadCrumb>
-                                        <BreadCrumb isLoading={loading}>
-                                            {name}
-                                        </BreadCrumb>
-                                    </BreadCrumbs>
-                                </Header>
-                                <Wrap>
-                                    <FieldCollection>
-                                        <FieldGroup title={`General`}>
-                                            <Field title={`Name`}>
-                                                <Input
-                                                    name={`name`}
-                                                    type={`text`}
-                                                    defaultValue={name}
-                                                />
-                                            </Field>
-                                            <Field title={`Created at`}>
-                                                <Input
-                                                    name={`createdAt`}
-                                                    type={`date`}
-                                                    defaultValue={createdAt}
-                                                    disabled={true}
-                                                />
-                                            </Field>
-                                        </FieldGroup>
-                                    </FieldCollection>
-                                </Wrap>
-                            </React.Fragment>
-                        )
-                    }}
-                </Query>
+                <GetCollectionQuery variables={{ byId: id }}>
+                    {this.renderQueryContent}
+                </GetCollectionQuery>
             </Page>
+        )
+    }
+
+    private renderQueryContent = ({ data, loading }: QueryContent<GetCollectionQueryResponse>) => {
+        if (loading) {
+            return <Loader />
+        }
+
+        if (!data) {
+            return 'No collection could be found'
+        }
+
+        const { getCollection } = data
+        const name = getCollection && getCollection.name
+        const createdAt = getCollection && getCollection.createdAt
+
+        return (
+            <React.Fragment>
+                <Header>
+                    <BreadCrumbs>
+                        <BreadCrumb>
+                            <TextLink to={routes.collections.index}>
+                                Collections
+                            </TextLink>
+                        </BreadCrumb>
+                        <BreadCrumb isLoading={loading}>
+                            {name}
+                        </BreadCrumb>
+                    </BreadCrumbs>
+                </Header>
+                <Wrap>
+                    <FieldCollection>
+                        <FieldGroup title={`General`}>
+                            <Field title={`Name`}>
+                                <Input
+                                    name={`name`}
+                                    type={`text`}
+                                    defaultValue={name}
+                                />
+                            </Field>
+                            <Field title={`Created at`}>
+                                <Input
+                                    name={`createdAt`}
+                                    type={`date`}
+                                    defaultValue={createdAt}
+                                    disabled={true}
+                                />
+                            </Field>
+                        </FieldGroup>
+                    </FieldCollection>
+                </Wrap>
+            </React.Fragment>
         )
     }
 
@@ -151,19 +110,9 @@ export class CollectionsEditView extends React.Component<Props> {
         return (
             <List horizontal={true}>
                 <ListItem>
-                    <Mutation<DeleteCollectionMutationReponse, DeleteCollectionMutationVariables>
-                        mutation={DELETE_COLLECTION_MUTATION}
-                    >
-                        {(mutate, { loading }) => (
-                            <Button
-                                onClick={() => this.onDelete(mutate)}
-                                type={ButtonType.danger}
-                                loading={loading}
-                            >
-                                Delete
-                            </Button>
-                        )}
-                    </Mutation>
+                    <DeleteCollectionMutation>
+                        {this.renderDeleteMutationContent}
+                    </DeleteCollectionMutation>
                 </ListItem>
                 <ListItem right={true}>
                     <Button
@@ -182,6 +131,18 @@ export class CollectionsEditView extends React.Component<Props> {
                     </Button>
                 </ListItem>
             </List>
+        )
+    }
+
+    private renderDeleteMutationContent = (mutate: MutationFunc, { loading }: MutationContent<DeleteCollectionMutationResponse>) => {
+        return (
+            <Button
+                onClick={() => this.onDelete(mutate)}
+                type={ButtonType.danger}
+                loading={loading}
+            >
+                Delete
+            </Button>
         )
     }
 

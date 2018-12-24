@@ -5,7 +5,7 @@ import { TextField } from '@material-ui/core'
 
 interface Props {
     className?: string
-    defaultValue?: string | number
+    defaultValue?: string | number | any
     name: string
     type: string
     disabled?: boolean

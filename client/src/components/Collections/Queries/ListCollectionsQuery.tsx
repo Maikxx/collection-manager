@@ -1,7 +1,6 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
-import { Query, OperationVariables } from 'react-apollo'
-import { ApolloError, ApolloQueryResult } from 'apollo-client'
+import { Query } from 'react-apollo'
 
 const LIST_COLLECTIONS_QUERY = gql`
     query {
@@ -15,10 +14,6 @@ const LIST_COLLECTIONS_QUERY = gql`
     }
 `
 
-interface Props {
-    children: any
-}
-
 export interface ListCollectionsQueryResponse {
     listCollections: {
         nodes: {
@@ -29,13 +24,8 @@ export interface ListCollectionsQueryResponse {
     }
 }
 
-export type RefetchFunction = (variables?: OperationVariables) => Promise<ApolloQueryResult<ListCollectionsQueryResponse>>
-
-export interface QueryContent {
-    loading: boolean
-    error?: ApolloError
-    data?: ListCollectionsQueryResponse
-    refetch?: RefetchFunction
+interface Props {
+    children: any
 }
 
 export class ListCollectionsQuery extends React.Component<Props> {

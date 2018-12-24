@@ -7,8 +7,6 @@ export const listCollections = () => ({
         const collectionService = CollectionService()
 
         const nodes = await collectionService.ListCollections()
-        return {
-            nodes: nodes,
-        }
+        return { nodes }
     },
 })

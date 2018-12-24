@@ -9,8 +9,9 @@ import { FieldCollectionFooter } from '../../Core/Field/FieldCollectionFooter/Fi
 import { List } from '../../Core/DataDisplay/List/List'
 import { ListItem } from '../../Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../Core/Button/Button'
-import { AddCollectionMutation, MutationContent } from '../Queries/AddCollectionMutation'
+import { AddCollectionMutation, AddCollectionMutationResponse } from '../Queries/AddCollectionMutation'
 import { MutationFunc } from 'react-apollo'
+import { MutationContent } from '../../../types/Apollo'
 
 interface Props {
     className?: string
@@ -33,7 +34,7 @@ export class AddCollectionModal extends React.Component<Props> {
                 title={`Add collection`}
             >
                 <AddCollectionMutation>
-                    {({ mutate, loading, error }: MutationContent) => (
+                    {(mutate: MutationFunc, { loading, error }: MutationContent<AddCollectionMutationResponse>) => (
                         <Form onSubmit={this.onSubmit(mutate)} id={`addCollectionForm`}>
                             <FieldCollection>
                                 <Field isLabel={true} title={`Name`}>

@@ -6,8 +6,6 @@ import { Wrap } from '../../../../components/Core/Layout/Wrap/Wrap'
 import { Header } from '../../../../components/Core/Layout/Header/Header'
 import { BreadCrumbs } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumbs'
 import { BreadCrumb } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumb'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
 import { FieldCollection } from '../../../../components/Core/Field/FieldCollection/FieldCollection'
 import { FieldGroup } from '../../../../components/Core/Field/FieldGroup/FieldGroup'
 import { Field } from '../../../../components/Core/Field/Field/Field'
@@ -17,27 +15,8 @@ import { routes } from '../../../routes'
 import { List } from '../../../../components/Core/DataDisplay/List/List'
 import { ListItem } from '../../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../../components/Core/Button/Button'
-
-const GET_COLLECTION_QUERY = gql`
-    query($byId: MongoID) {
-        getCollection(byId: $byId) {
-            _id
-            name
-            createdAt
-        }
-    }
-`
-interface QueryVariables {
-    byId: string
-}
-
-interface QueryResponse {
-    getCollection?: {
-        _id: string
-        name: string
-        createdAt?: Date
-    }
-}
+import { QueryContent } from '../../../../types/Apollo'
+import { GetCollectionQuery, GetCollectionQueryResponse } from '../../../../components/Collections/Queries/GetCollectionQuery'
 
 interface RouteParams {
     id: string
@@ -60,55 +39,9 @@ export class CollectionsDataView extends React.Component<Props> {
                 hasPageHeader={true}
                 renderPageActions={this.renderPageActions}
             >
-                <Query<QueryResponse, QueryVariables>
-                    query={GET_COLLECTION_QUERY}
-                    variables={{ byId: id }}
-                >
-                    {({ data, loading }) => {
-                        if (loading) {
-                            return (
-                                <Loader />
-                            )
-                        }
-
-                        if (!data) {
-                            return 'No collection could be found'
-                        }
-
-                        const { getCollection } = data
-                        const name = getCollection && getCollection.name
-                        const createdAt = getCollection && getCollection.createdAt
-
-                        return (
-                            <React.Fragment>
-                                <Header>
-                                    <BreadCrumbs>
-                                        <BreadCrumb>
-                                            <TextLink to={routes.collections.index}>
-                                                Collections
-                                            </TextLink>
-                                        </BreadCrumb>
-                                        <BreadCrumb isLoading={loading}>
-                                            {name}
-                                        </BreadCrumb>
-                                    </BreadCrumbs>
-                                </Header>
-                                <Wrap>
-                                    <FieldCollection>
-                                        <FieldGroup title={`General`}>
-                                            <Field title={`Name`}>
-                                                {name}
-                                            </Field>
-                                            <Field title={`Created at`}>
-                                                {createdAt}
-                                            </Field>
-                                        </FieldGroup>
-                                    </FieldCollection>
-                                </Wrap>
-                            </React.Fragment>
-                        )
-                    }}
-                </Query>
+                <GetCollectionQuery variables={{ byId: id }}>
+                    {this.renderQueryContent}
+                </GetCollectionQuery>
             </Page>
         )
     }
@@ -128,6 +61,49 @@ export class CollectionsDataView extends React.Component<Props> {
                     </Button>
                 </ListItem>
             </List>
+        )
+    }
+
+    private renderQueryContent = ({ loading, data }: QueryContent<GetCollectionQueryResponse>) => {
+        if (loading) {
+            return <Loader />
+        }
+
+        if (!data) {
+            return 'No collection could be found'
+        }
+
+        const { getCollection } = data
+        const name = getCollection && getCollection.name
+        const createdAt = getCollection && getCollection.createdAt
+
+        return (
+            <React.Fragment>
+                <Header>
+                    <BreadCrumbs>
+                        <BreadCrumb>
+                            <TextLink to={routes.collections.index}>
+                                Collections
+                            </TextLink>
+                        </BreadCrumb>
+                        <BreadCrumb isLoading={loading}>
+                            {name}
+                        </BreadCrumb>
+                    </BreadCrumbs>
+                </Header>
+                <Wrap>
+                    <FieldCollection>
+                        <FieldGroup title={`General`}>
+                            <Field title={`Name`}>
+                                {name}
+                            </Field>
+                            <Field title={`Created at`}>
+                                {createdAt}
+                            </Field>
+                        </FieldGroup>
+                    </FieldCollection>
+                </Wrap>
+            </React.Fragment>
         )
     }
 }
