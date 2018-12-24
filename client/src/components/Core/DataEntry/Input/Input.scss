@@ -1,5 +1,8 @@
 .cm-Input {
+    @import '../../../../scss/variables/colors';
+
     width: 265px;
+    background-color: $color-white;
 
     & input {
         padding: 12px 6px;
