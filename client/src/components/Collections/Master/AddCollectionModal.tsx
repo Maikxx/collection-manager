@@ -4,7 +4,6 @@ import { Modal } from '../../Core/Feedback/Modal/Modal'
 import { FieldCollection } from '../../Core/Field/FieldCollection/FieldCollection'
 import { Field } from '../../Core/Field/Field/Field'
 import { Form } from '../../Core/DataEntry/Form/Form'
-import { FieldGroup } from '../../Core/Field/FieldGroup/FieldGroup'
 import { Input } from '../../Core/DataEntry/Input/Input'
 import { FieldCollectionFooter } from '../../Core/Field/FieldCollectionFooter/FieldCollectionFooter'
 import { List } from '../../Core/DataDisplay/List/List'
@@ -37,11 +36,9 @@ export class AddCollectionModal extends React.Component<Props> {
                     {({ mutate, loading, error }: MutationContent) => (
                         <Form onSubmit={this.onSubmit(mutate)} id={`addCollectionForm`}>
                             <FieldCollection>
-                                <FieldGroup title={`General`}>
-                                    <Field isLabel={true} title={`Name`}>
-                                        <Input name={`name`} type={`text`}/>
-                                    </Field>
-                                </FieldGroup>
+                                <Field isLabel={true} title={`Name`}>
+                                    <Input name={`name`} type={`text`}/>
+                                </Field>
                                 <FieldCollectionFooter>
                                     <List horizontal={true}>
                                         <ListItem right={true}>
