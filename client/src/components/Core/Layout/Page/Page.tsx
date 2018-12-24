@@ -3,6 +3,7 @@ import * as React from 'react'
 import { BEM } from '../../../../services/BEMService'
 import { List } from '../../DataDisplay/List/List'
 import { Wrap } from '../Wrap/Wrap'
+import { PageActions } from './PageActions'
 
 interface Props {
     className?: string
@@ -23,9 +24,11 @@ export class Page extends React.Component<Props> {
             <main className={this.bem.getClassName(className)}>
                 {children}
                 {renderPageActions && (
-                    <Wrap>
-                        {renderPageActions()}
-                    </Wrap>
+                    <PageActions>
+                        <Wrap>
+                            {renderPageActions()}
+                        </Wrap>
+                    </PageActions>
                 )}
             </main>
         )

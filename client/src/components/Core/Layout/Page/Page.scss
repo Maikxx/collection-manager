@@ -15,16 +15,6 @@
         padding-top: $header-height;
     }
 
-    &--has-page-actions {
-        > .cm-Wrap:last-child {
-            border-top: 1px solid $color-dark-grey;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-    }
-
     &--has-page-actions.cm-Page--has-page-header {
         padding-top: unset;
         height: calc(100vh - #{$header-height});

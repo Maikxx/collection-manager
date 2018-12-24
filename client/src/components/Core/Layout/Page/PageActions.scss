@@ -1,0 +1,10 @@
+.cm-PageActions {
+    @import '../../../../scss/variables/colors';
+
+    border-top: 1px solid $color-dark-grey;
+    background-color: $color-background;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
