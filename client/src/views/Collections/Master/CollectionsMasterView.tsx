@@ -4,7 +4,7 @@ import { Page } from '../../../components/Core/Layout/Page/Page'
 import {
     ListCollectionsQuery,
     ListCollectionsQueryResponse,
-} from '../../../components/Collections/Queries/ListCollectionsQuery'
+} from '../../../components/Collections/Apollo/ListCollectionsQuery'
 import { Loader } from '../../../components/Core/Feedback/Loader/Loader'
 import { Wrap } from '../../../components/Core/Layout/Wrap/Wrap'
 import { TableView } from '../../../components/Core/DataDisplay/Table/TableView/TableView'

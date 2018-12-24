@@ -5,7 +5,7 @@ import { CollectionsMasterView } from './Master/CollectionsMasterView'
 import { routes } from '../routes'
 import { CollectionsDetailView } from './Detail/CollectionsDetailView'
 import { RefetchFunction } from '../../types/Apollo'
-import { ListCollectionsQueryResponse } from '../../components/Collections/Queries/ListCollectionsQuery'
+import { ListCollectionsQueryResponse } from '../../components/Collections/Apollo/ListCollectionsQuery'
 
 interface Props extends RouteComponentProps {}
 

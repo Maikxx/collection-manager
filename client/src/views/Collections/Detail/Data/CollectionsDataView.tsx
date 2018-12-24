@@ -16,13 +16,9 @@ import { List } from '../../../../components/Core/DataDisplay/List/List'
 import { ListItem } from '../../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../../components/Core/Button/Button'
 import { QueryContent } from '../../../../types/Apollo'
-import { GetCollectionQuery, GetCollectionQueryResponse } from '../../../../components/Collections/Queries/GetCollectionQuery'
+import { GetCollectionQuery, GetCollectionQueryResponse } from '../../../../components/Collections/Apollo/GetCollectionQuery'
 
-interface RouteParams {
-    id: string
-}
-
-interface Props extends RouteComponentProps<RouteParams> {
+interface Props extends RouteComponentProps<{ id: string }> {
     className?: string
 }
 

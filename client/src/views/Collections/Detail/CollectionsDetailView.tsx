@@ -5,7 +5,7 @@ import { routes } from '../../routes'
 import { CollectionsDataView } from './Data/CollectionsDataView'
 import { CollectionsEditView } from './Edit/CollectionsEditView'
 import { RefetchFunction } from '../../../types/Apollo'
-import { ListCollectionsQueryResponse } from '../../../components/Collections/Queries/ListCollectionsQuery'
+import { ListCollectionsQueryResponse } from '../../../components/Collections/Apollo/ListCollectionsQuery'
 
 interface Props extends RouteComponentProps {
     className?: string

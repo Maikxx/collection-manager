@@ -18,15 +18,11 @@ import { ListItem } from '../../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../../components/Core/Button/Button'
 import { Input } from '../../../../components/Core/DataEntry/Input/Input'
 import { RefetchFunction, QueryContent, MutationContent } from '../../../../types/Apollo'
-import { DeleteCollectionMutation, DeleteCollectionMutationResponse } from '../../../../components/Collections/Queries/DeleteCollectionMutation'
-import { ListCollectionsQueryResponse } from '../../../../components/Collections/Queries/ListCollectionsQuery'
-import { GetCollectionQuery, GetCollectionQueryResponse } from '../../../../components/Collections/Queries/GetCollectionQuery'
+import { DeleteCollectionMutation, DeleteCollectionMutationResponse } from '../../../../components/Collections/Apollo/DeleteCollectionMutation'
+import { ListCollectionsQueryResponse } from '../../../../components/Collections/Apollo/ListCollectionsQuery'
+import { GetCollectionQuery, GetCollectionQueryResponse } from '../../../../components/Collections/Apollo/GetCollectionQuery'
 
-interface RouteParams {
-    id: string
-}
-
-interface Props extends RouteComponentProps<RouteParams> {
+interface Props extends RouteComponentProps<{ id: string }> {
     className?: string
     refetch?: RefetchFunction<ListCollectionsQueryResponse>
 }
