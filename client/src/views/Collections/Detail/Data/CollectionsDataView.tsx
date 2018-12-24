@@ -72,6 +72,9 @@ export class CollectionsDataView extends React.Component<Props> {
                                                 {createdAt}
                                             </Field>
                                         </FieldGroup>
+                                        <FieldGroup title={`Owned items`}>
+                                            {/* TODO */}
+                                        </FieldGroup>
                                     </FieldCollection>
                                 </Wrap>
                             </React.Fragment>
