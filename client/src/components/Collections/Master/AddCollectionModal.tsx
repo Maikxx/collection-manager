@@ -3,13 +3,13 @@ import { BEM } from '../../../services/BEMService'
 import { Modal } from '../../Core/Feedback/Modal/Modal'
 import { FieldCollection } from '../../Core/Field/FieldCollection/FieldCollection'
 import { Field } from '../../Core/Field/Field/Field'
-import { Form } from '../../Core/DataEntry/Form/Form'
+import { Form, getFieldsFromSubmitEvent } from '../../Core/DataEntry/Form/Form'
 import { Input } from '../../Core/DataEntry/Input/Input'
 import { FieldCollectionFooter } from '../../Core/Field/FieldCollectionFooter/FieldCollectionFooter'
 import { List } from '../../Core/DataDisplay/List/List'
 import { ListItem } from '../../Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../Core/Button/Button'
-import { AddCollectionMutation, AddCollectionMutationResponse } from '../Queries/AddCollectionMutation'
+import { AddCollectionMutation, AddCollectionMutationResponse } from '../Apollo/AddCollectionMutation'
 import { MutationFunc } from 'react-apollo'
 import { MutationContent } from '../../../types/Apollo'
 
@@ -34,7 +34,7 @@ export class AddCollectionModal extends React.Component<Props> {
                 title={`Add collection`}
             >
                 <AddCollectionMutation>
-                    {(mutate: MutationFunc, { loading, error }: MutationContent<AddCollectionMutationResponse>) => (
+                    {(mutate: MutationFunc, { loading }: MutationContent<AddCollectionMutationResponse>) => (
                         <Form onSubmit={this.onSubmit(mutate)} id={`addCollectionForm`}>
                             <FieldCollection>
                                 <Field isLabel={true} title={`Name`}>
@@ -72,13 +72,7 @@ export class AddCollectionModal extends React.Component<Props> {
     private onSubmit = (mutateFunction: MutationFunc) => async (event: React.FormEvent<HTMLFormElement>) => {
         const { onSubmitSuccess } = this.props
 
-        const fields = Array.prototype.slice.call(event.target)
-            .filter((el: HTMLInputElement | HTMLTextAreaElement) => el.name)
-            .reduce((form: any, el: HTMLInputElement | HTMLTextAreaElement) => ({
-                ...form,
-                [el.name]: el.value.trim(),
-            }), {})
-
+        const fields = getFieldsFromSubmitEvent(event)
         const response = await mutateFunction({
             variables: {
                 collection: {

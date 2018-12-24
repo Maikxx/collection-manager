@@ -8,8 +8,7 @@ export const EditCollectionService = async (args: EditCollectionArgs) => {
 
     try {
         const doc = await Collection.findByIdAndUpdate(_id, { $set: { name }})
-        console.log(doc)
-        return doc[0]
+        return doc
     } catch (error) {
         throw new ApolloError(error.message, '500')
     }

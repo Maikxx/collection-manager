@@ -6,7 +6,7 @@ import { Wrap } from '../../../../components/Core/Layout/Wrap/Wrap'
 import { Header } from '../../../../components/Core/Layout/Header/Header'
 import { BreadCrumbs } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumbs'
 import { BreadCrumb } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumb'
-import { MutationFn, MutationFunc } from 'react-apollo'
+import { MutationFunc } from 'react-apollo'
 import { FieldCollection } from '../../../../components/Core/Field/FieldCollection/FieldCollection'
 import { FieldGroup } from '../../../../components/Core/Field/FieldGroup/FieldGroup'
 import { Field } from '../../../../components/Core/Field/Field/Field'
@@ -18,9 +18,18 @@ import { ListItem } from '../../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../../components/Core/Button/Button'
 import { Input } from '../../../../components/Core/DataEntry/Input/Input'
 import { RefetchFunction, QueryContent, MutationContent } from '../../../../types/Apollo'
-import { DeleteCollectionMutation, DeleteCollectionMutationResponse } from '../../../../components/Collections/Apollo/DeleteCollectionMutation'
+import {
+    DeleteCollectionMutation,
+    DeleteCollectionMutationResponse,
+} from '../../../../components/Collections/Apollo/DeleteCollectionMutation'
 import { ListCollectionsQueryResponse } from '../../../../components/Collections/Apollo/ListCollectionsQuery'
 import { GetCollectionQuery, GetCollectionQueryResponse } from '../../../../components/Collections/Apollo/GetCollectionQuery'
+import {
+    EditCollectionMutation,
+    EditCollectionMutationResponse,
+    EditCollectionMutationVariables
+} from '../../../../components/Collections/Apollo/EditCollectionMutation'
+import { Form, getFieldsFromSubmitEvent } from '../../../../components/Core/DataEntry/Form/Form'
 
 interface Props extends RouteComponentProps<{ id: string }> {
     className?: string
@@ -31,19 +40,32 @@ export class CollectionsEditView extends React.Component<Props> {
     private bem = new BEM('CollectionsEditView')
 
     public render() {
+        return (
+            <EditCollectionMutation>
+               {this.renderForm}
+            </EditCollectionMutation>
+        )
+    }
+
+    private renderForm = (
+        mutate: MutationFunc<EditCollectionMutationResponse, EditCollectionMutationVariables>,
+        { loading }: MutationContent<EditCollectionMutationResponse>
+    ) => {
         const { className } = this.props
         const { id } = this.props.match.params
 
         return (
-            <Page
-                className={this.bem.getClassName(className)}
-                hasPageHeader={true}
-                renderPageActions={this.renderPageActions}
-            >
-                <GetCollectionQuery variables={{ byId: id }}>
-                    {this.renderQueryContent}
-                </GetCollectionQuery>
-            </Page>
+            <Form onSubmit={this.onSubmit(mutate)} id={`editCollectionForm`}>
+                <Page
+                    className={this.bem.getClassName(className)}
+                    hasPageHeader={true}
+                    renderPageActions={() => this.renderPageActions(loading)}
+                >
+                    <GetCollectionQuery variables={{ byId: id }}>
+                        {this.renderQueryContent}
+                    </GetCollectionQuery>
+                </Page>
+            </Form>
         )
     }
 
@@ -99,7 +121,7 @@ export class CollectionsEditView extends React.Component<Props> {
         )
     }
 
-    private renderPageActions = () => {
+    private renderPageActions = (loading: boolean) => {
         const { history } = this.props
         const { id } = this.props.match.params
 
@@ -107,7 +129,7 @@ export class CollectionsEditView extends React.Component<Props> {
             <List horizontal={true}>
                 <ListItem>
                     <DeleteCollectionMutation>
-                        {this.renderDeleteMutationContent}
+                        {this.renderDeleteButton}
                     </DeleteCollectionMutation>
                 </ListItem>
                 <ListItem right={true}>
@@ -120,7 +142,8 @@ export class CollectionsEditView extends React.Component<Props> {
                 </ListItem>
                 <ListItem right={true}>
                     <Button
-                        onClick={() => console.log('TODO')}
+                        form={`editCollectionForm`}
+                        loading={loading}
                         type={ButtonType.confirm}
                     >
                         Save
@@ -130,19 +153,44 @@ export class CollectionsEditView extends React.Component<Props> {
         )
     }
 
-    private renderDeleteMutationContent = (mutate: MutationFunc, { loading }: MutationContent<DeleteCollectionMutationResponse>) => {
+    private renderDeleteButton = (mutate: MutationFunc, { loading }: MutationContent<DeleteCollectionMutationResponse>) => {
         return (
             <Button
+                loading={loading}
                 onClick={() => this.onDelete(mutate)}
                 type={ButtonType.danger}
-                loading={loading}
             >
                 Delete
             </Button>
         )
     }
 
-    private onDelete = async (mutateDelete: MutationFn) => {
+    private onSubmit = (mutateEdit: MutationFunc<EditCollectionMutationResponse>) =>
+        async (event: React.FormEvent<HTMLFormElement>) => {
+            const { history, match, refetch } = this.props
+            const { id } = match.params
+
+            const fields = getFieldsFromSubmitEvent(event)
+
+            const response = await mutateEdit({
+                variables: {
+                    collection: {
+                        _id: id,
+                        name: fields.name,
+                    },
+                },
+            })
+
+            if (response && response.data && response.data.editCollection) {
+                if (refetch) {
+                    refetch({ silent: true })
+                }
+
+                history.push(routes.collections.detail.data(id))
+            }
+        }
+
+    private onDelete = async (mutateDelete: MutationFunc<DeleteCollectionMutationResponse>) => {
         const { history, match, refetch } = this.props
         const { id } = match.params
 

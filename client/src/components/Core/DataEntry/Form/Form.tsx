@@ -8,6 +8,15 @@ type FormEncTypeType = 'application/x-www-form-urlencoded' | 'multipart/form-dat
 type FormMethodType = 'post' | 'get' | 'dialog'
 type FormTarget = '_self' | '_blank' | '_parent' | '_top' | string
 
+export const getFieldsFromSubmitEvent = (event: React.FormEvent<HTMLFormElement>) => {
+    return Array.prototype.slice.call(event.target)
+        .filter((el: HTMLInputElement | HTMLTextAreaElement) => el.name)
+        .reduce((form: any, el: HTMLInputElement | HTMLTextAreaElement) => ({
+            ...form,
+            [el.name]: el.value.trim(),
+        }), {})
+}
+
 interface Props {
     acceptCharset?: string
     action?: string
