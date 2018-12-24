@@ -4,12 +4,11 @@ import { Switch, Route, RouteComponentProps } from 'react-router-dom'
 import { routes } from '../../routes'
 import { CollectionsDataView } from './Data/CollectionsDataView'
 import { CollectionsEditView } from './Edit/CollectionsEditView'
-import { RefetchFunction } from '../../../types/Apollo'
-import { ListCollectionsQueryResponse } from '../../../components/Collections/Apollo/ListCollectionsQuery'
+import { ListCollectionsRefetchFunction } from '../../../components/Collections/Apollo/ListCollectionsQuery'
 
 interface Props extends RouteComponentProps {
     className?: string
-    refetch?: RefetchFunction<ListCollectionsQueryResponse>
+    refetch?: ListCollectionsRefetchFunction
 }
 
 export class CollectionsDetailView extends React.Component<Props> {

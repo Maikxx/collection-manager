@@ -1,6 +1,6 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+import { Mutation, MutationFunc } from 'react-apollo'
 import { MutationContent } from '../../../types/Apollo'
 
 const DELETE_COLLECTION_MUTATION = gql`
@@ -21,6 +21,9 @@ export interface DeleteCollectionMutationVariables {
     _id: string
 }
 
+export type DeleteCollectionMutationContent = MutationContent<DeleteCollectionMutationResponse>
+export type DeleteCollectionMutationFunction = MutationFunc<DeleteCollectionMutationResponse, DeleteCollectionMutationVariables>
+
 interface Props {
     children: any
 }
@@ -32,7 +35,7 @@ export class DeleteCollectionMutation extends React.Component<Props> {
         return (
             <Mutation mutation={DELETE_COLLECTION_MUTATION}>
                 {(mutate, { loading, data, error }) => (
-                    children(mutate, { loading, data, error } as MutationContent<DeleteCollectionMutationResponse>)
+                    children(mutate, { loading, data, error })
                 )}
             </Mutation>
         )

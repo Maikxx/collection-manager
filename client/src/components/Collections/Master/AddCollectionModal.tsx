@@ -9,9 +9,7 @@ import { FieldCollectionFooter } from '../../Core/Field/FieldCollectionFooter/Fi
 import { List } from '../../Core/DataDisplay/List/List'
 import { ListItem } from '../../Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../Core/Button/Button'
-import { AddCollectionMutation, AddCollectionMutationResponse } from '../Apollo/AddCollectionMutation'
-import { MutationFunc } from 'react-apollo'
-import { MutationContent } from '../../../types/Apollo'
+import { AddCollectionMutation, AddCollectionMutationFunction, AddCollectionMutationContent } from '../Apollo/AddCollectionMutation'
 
 interface Props {
     className?: string
@@ -34,7 +32,7 @@ export class AddCollectionModal extends React.Component<Props> {
                 title={`Add collection`}
             >
                 <AddCollectionMutation>
-                    {(mutate: MutationFunc, { loading }: MutationContent<AddCollectionMutationResponse>) => (
+                    {(mutate: AddCollectionMutationFunction, { loading }: AddCollectionMutationContent) => (
                         <Form onSubmit={this.onSubmit(mutate)} id={`addCollectionForm`}>
                             <FieldCollection>
                                 <Field isLabel={true} title={`Name`}>
@@ -69,20 +67,21 @@ export class AddCollectionModal extends React.Component<Props> {
         )
     }
 
-    private onSubmit = (mutateFunction: MutationFunc) => async (event: React.FormEvent<HTMLFormElement>) => {
-        const { onSubmitSuccess } = this.props
+    private onSubmit = (mutateFunction: AddCollectionMutationFunction) =>
+        async (event: React.FormEvent<HTMLFormElement>) => {
+            const { onSubmitSuccess } = this.props
 
-        const fields = getFieldsFromSubmitEvent(event)
-        const response = await mutateFunction({
-            variables: {
-                collection: {
-                    name: fields.name,
+            const fields = getFieldsFromSubmitEvent(event)
+            const response = await mutateFunction({
+                variables: {
+                    collection: {
+                        name: fields.name,
+                    },
                 },
-            },
-        })
+            })
 
-        if (response && response.data && response.data.addCollection) {
-            onSubmitSuccess()
+            if (response && response.data && response.data.addCollection) {
+                onSubmitSuccess()
+            }
         }
-    }
 }

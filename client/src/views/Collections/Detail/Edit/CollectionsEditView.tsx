@@ -17,23 +17,23 @@ import { List } from '../../../../components/Core/DataDisplay/List/List'
 import { ListItem } from '../../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../../components/Core/Button/Button'
 import { Input } from '../../../../components/Core/DataEntry/Input/Input'
-import { RefetchFunction, QueryContent, MutationContent } from '../../../../types/Apollo'
 import {
     DeleteCollectionMutation,
-    DeleteCollectionMutationResponse,
+    DeleteCollectionMutationContent,
+    DeleteCollectionMutationFunction,
 } from '../../../../components/Collections/Apollo/DeleteCollectionMutation'
-import { ListCollectionsQueryResponse } from '../../../../components/Collections/Apollo/ListCollectionsQuery'
-import { GetCollectionQuery, GetCollectionQueryResponse } from '../../../../components/Collections/Apollo/GetCollectionQuery'
+import { ListCollectionsRefetchFunction } from '../../../../components/Collections/Apollo/ListCollectionsQuery'
+import { GetCollectionQuery, GetCollectionMutationContent } from '../../../../components/Collections/Apollo/GetCollectionQuery'
 import {
     EditCollectionMutation,
-    EditCollectionMutationResponse,
-    EditCollectionMutationVariables
+    EditCollectionMutationContent,
+    EditCollectionMutationFunction
 } from '../../../../components/Collections/Apollo/EditCollectionMutation'
 import { Form, getFieldsFromSubmitEvent } from '../../../../components/Core/DataEntry/Form/Form'
 
 interface Props extends RouteComponentProps<{ id: string }> {
     className?: string
-    refetch?: RefetchFunction<ListCollectionsQueryResponse>
+    refetch?: ListCollectionsRefetchFunction
 }
 
 export class CollectionsEditView extends React.Component<Props> {
@@ -47,10 +47,7 @@ export class CollectionsEditView extends React.Component<Props> {
         )
     }
 
-    private renderForm = (
-        mutate: MutationFunc<EditCollectionMutationResponse, EditCollectionMutationVariables>,
-        { loading }: MutationContent<EditCollectionMutationResponse>
-    ) => {
+    private renderForm = (mutate: EditCollectionMutationFunction, { loading }: EditCollectionMutationContent) => {
         const { className } = this.props
         const { id } = this.props.match.params
 
@@ -62,62 +59,60 @@ export class CollectionsEditView extends React.Component<Props> {
                     renderPageActions={() => this.renderPageActions(loading)}
                 >
                     <GetCollectionQuery variables={{ byId: id }}>
-                        {this.renderQueryContent}
+                        {({ data, loading }: GetCollectionMutationContent) => {
+                            if (loading) {
+                                return <Loader />
+                            }
+
+                            if (!data) {
+                                return 'No collection could be found'
+                            }
+
+                            const { getCollection } = data
+                            const name = getCollection && getCollection.name
+                            const createdAt = getCollection && getCollection.createdAt
+
+                            return (
+                                <React.Fragment>
+                                    <Header>
+                                        <BreadCrumbs>
+                                            <BreadCrumb>
+                                                <TextLink to={routes.collections.index}>
+                                                    Collections
+                                                </TextLink>
+                                            </BreadCrumb>
+                                            <BreadCrumb isLoading={loading}>
+                                                {name}
+                                            </BreadCrumb>
+                                        </BreadCrumbs>
+                                    </Header>
+                                    <Wrap>
+                                        <FieldCollection>
+                                            <FieldGroup title={`General`}>
+                                                <Field title={`Name`}>
+                                                    <Input
+                                                        name={`name`}
+                                                        type={`text`}
+                                                        defaultValue={name}
+                                                    />
+                                                </Field>
+                                                <Field title={`Created at`}>
+                                                    <Input
+                                                        name={`createdAt`}
+                                                        type={`date`}
+                                                        defaultValue={createdAt}
+                                                        disabled={true}
+                                                    />
+                                                </Field>
+                                            </FieldGroup>
+                                        </FieldCollection>
+                                    </Wrap>
+                                </React.Fragment>
+                            )
+                        }}
                     </GetCollectionQuery>
                 </Page>
             </Form>
-        )
-    }
-
-    private renderQueryContent = ({ data, loading }: QueryContent<GetCollectionQueryResponse>) => {
-        if (loading) {
-            return <Loader />
-        }
-
-        if (!data) {
-            return 'No collection could be found'
-        }
-
-        const { getCollection } = data
-        const name = getCollection && getCollection.name
-        const createdAt = getCollection && getCollection.createdAt
-
-        return (
-            <React.Fragment>
-                <Header>
-                    <BreadCrumbs>
-                        <BreadCrumb>
-                            <TextLink to={routes.collections.index}>
-                                Collections
-                            </TextLink>
-                        </BreadCrumb>
-                        <BreadCrumb isLoading={loading}>
-                            {name}
-                        </BreadCrumb>
-                    </BreadCrumbs>
-                </Header>
-                <Wrap>
-                    <FieldCollection>
-                        <FieldGroup title={`General`}>
-                            <Field title={`Name`}>
-                                <Input
-                                    name={`name`}
-                                    type={`text`}
-                                    defaultValue={name}
-                                />
-                            </Field>
-                            <Field title={`Created at`}>
-                                <Input
-                                    name={`createdAt`}
-                                    type={`date`}
-                                    defaultValue={createdAt}
-                                    disabled={true}
-                                />
-                            </Field>
-                        </FieldGroup>
-                    </FieldCollection>
-                </Wrap>
-            </React.Fragment>
         )
     }
 
@@ -129,7 +124,15 @@ export class CollectionsEditView extends React.Component<Props> {
             <List horizontal={true}>
                 <ListItem>
                     <DeleteCollectionMutation>
-                        {this.renderDeleteButton}
+                        {(mutate: MutationFunc, { loading }: DeleteCollectionMutationContent) => (
+                            <Button
+                                loading={loading}
+                                onClick={() => this.onDelete(mutate)}
+                                type={ButtonType.danger}
+                            >
+                                Delete
+                            </Button>
+                        )}
                     </DeleteCollectionMutation>
                 </ListItem>
                 <ListItem right={true}>
@@ -153,19 +156,7 @@ export class CollectionsEditView extends React.Component<Props> {
         )
     }
 
-    private renderDeleteButton = (mutate: MutationFunc, { loading }: MutationContent<DeleteCollectionMutationResponse>) => {
-        return (
-            <Button
-                loading={loading}
-                onClick={() => this.onDelete(mutate)}
-                type={ButtonType.danger}
-            >
-                Delete
-            </Button>
-        )
-    }
-
-    private onSubmit = (mutateEdit: MutationFunc<EditCollectionMutationResponse>) =>
+    private onSubmit = (mutateEdit: EditCollectionMutationFunction) =>
         async (event: React.FormEvent<HTMLFormElement>) => {
             const { history, match, refetch } = this.props
             const { id } = match.params
@@ -190,7 +181,7 @@ export class CollectionsEditView extends React.Component<Props> {
             }
         }
 
-    private onDelete = async (mutateDelete: MutationFunc<DeleteCollectionMutationResponse>) => {
+    private onDelete = async (mutateDelete: DeleteCollectionMutationFunction) => {
         const { history, match, refetch } = this.props
         const { id } = match.params
 

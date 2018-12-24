@@ -1,6 +1,7 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+import { Mutation, MutationFunc } from 'react-apollo'
+import { MutationContent } from '../../../types/Apollo'
 
 const EDIT_COLLECTION_MUTATION = gql`
     mutation($collection: EditCollectionType!) {
@@ -24,6 +25,9 @@ export interface EditCollectionMutationResponse {
         }
     }
 }
+
+export type EditCollectionMutationContent = MutationContent<EditCollectionMutationResponse>
+export type EditCollectionMutationFunction = MutationFunc<EditCollectionMutationResponse, EditCollectionMutationVariables>
 
 interface Props {
     children: any

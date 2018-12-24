@@ -15,8 +15,7 @@ import { routes } from '../../../routes'
 import { List } from '../../../../components/Core/DataDisplay/List/List'
 import { ListItem } from '../../../../components/Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../../../components/Core/Button/Button'
-import { QueryContent } from '../../../../types/Apollo'
-import { GetCollectionQuery, GetCollectionQueryResponse } from '../../../../components/Collections/Apollo/GetCollectionQuery'
+import { GetCollectionQuery, GetCollectionMutationContent } from '../../../../components/Collections/Apollo/GetCollectionQuery'
 
 interface Props extends RouteComponentProps<{ id: string }> {
     className?: string
@@ -36,7 +35,48 @@ export class CollectionsDataView extends React.Component<Props> {
                 renderPageActions={this.renderPageActions}
             >
                 <GetCollectionQuery variables={{ byId: id }}>
-                    {this.renderQueryContent}
+                    {({ loading, data }: GetCollectionMutationContent) => {
+                        if (loading) {
+                            return <Loader />
+                        }
+
+                        if (!data) {
+                            return 'No collection could be found'
+                        }
+
+                        const { getCollection } = data
+                        const name = getCollection && getCollection.name
+                        const createdAt = getCollection && getCollection.createdAt
+
+                        return (
+                            <React.Fragment>
+                                <Header>
+                                    <BreadCrumbs>
+                                        <BreadCrumb>
+                                            <TextLink to={routes.collections.index}>
+                                                Collections
+                                            </TextLink>
+                                        </BreadCrumb>
+                                        <BreadCrumb isLoading={loading}>
+                                            {name}
+                                        </BreadCrumb>
+                                    </BreadCrumbs>
+                                </Header>
+                                <Wrap>
+                                    <FieldCollection>
+                                        <FieldGroup title={`General`}>
+                                            <Field title={`Name`}>
+                                                {name}
+                                            </Field>
+                                            <Field title={`Created at`}>
+                                                {createdAt}
+                                            </Field>
+                                        </FieldGroup>
+                                    </FieldCollection>
+                                </Wrap>
+                            </React.Fragment>
+                        )
+                    }}
                 </GetCollectionQuery>
             </Page>
         )
@@ -57,49 +97,6 @@ export class CollectionsDataView extends React.Component<Props> {
                     </Button>
                 </ListItem>
             </List>
-        )
-    }
-
-    private renderQueryContent = ({ loading, data }: QueryContent<GetCollectionQueryResponse>) => {
-        if (loading) {
-            return <Loader />
-        }
-
-        if (!data) {
-            return 'No collection could be found'
-        }
-
-        const { getCollection } = data
-        const name = getCollection && getCollection.name
-        const createdAt = getCollection && getCollection.createdAt
-
-        return (
-            <React.Fragment>
-                <Header>
-                    <BreadCrumbs>
-                        <BreadCrumb>
-                            <TextLink to={routes.collections.index}>
-                                Collections
-                            </TextLink>
-                        </BreadCrumb>
-                        <BreadCrumb isLoading={loading}>
-                            {name}
-                        </BreadCrumb>
-                    </BreadCrumbs>
-                </Header>
-                <Wrap>
-                    <FieldCollection>
-                        <FieldGroup title={`General`}>
-                            <Field title={`Name`}>
-                                {name}
-                            </Field>
-                            <Field title={`Created at`}>
-                                {createdAt}
-                            </Field>
-                        </FieldGroup>
-                    </FieldCollection>
-                </Wrap>
-            </React.Fragment>
         )
     }
 }

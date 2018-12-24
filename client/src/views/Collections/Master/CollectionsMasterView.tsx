@@ -4,6 +4,8 @@ import { Page } from '../../../components/Core/Layout/Page/Page'
 import {
     ListCollectionsQuery,
     ListCollectionsQueryResponse,
+    ListCollectionsRefetchFunction,
+    ListCollectionsQueryContent,
 } from '../../../components/Collections/Apollo/ListCollectionsQuery'
 import { Loader } from '../../../components/Core/Feedback/Loader/Loader'
 import { Wrap } from '../../../components/Core/Layout/Wrap/Wrap'
@@ -24,11 +26,10 @@ import { Header } from '../../../components/Core/Layout/Header/Header'
 import { BreadCrumbs } from '../../../components/Core/Layout/BreadCrumbs/BreadCrumbs'
 import { BreadCrumb } from '../../../components/Core/Layout/BreadCrumbs/BreadCrumb'
 import { RouteComponentProps } from 'react-router-dom'
-import { RefetchFunction, QueryContent } from '../../../types/Apollo'
 
 interface Props extends RouteComponentProps {
     className?: string
-    onQueryLoaded?: (refetchFunction: RefetchFunction<ListCollectionsQueryResponse>) => void
+    onQueryLoaded?: (refetchFunction: ListCollectionsRefetchFunction) => void
 }
 
 interface State {
@@ -55,63 +56,61 @@ export class CollectionsMasterView extends React.Component<Props, State> {
                     </BreadCrumbs>
                 </Header>
                 <ListCollectionsQuery>
-                    {this.renderQueryContent}
+                    {({ data, loading, refetch }: ListCollectionsQueryContent) => {
+                        const { onQueryLoaded } = this.props
+                        const { showAddCollectionModal } = this.state
+
+                        if (loading || !data) {
+                            return <Loader />
+                        }
+
+                        if (refetch && onQueryLoaded) {
+                            onQueryLoaded(refetch)
+                        }
+
+                        return (
+                            <React.Fragment>
+                                <Wrap>
+                                    <ActionBar>
+                                        <List horizontal={true}>
+                                            <ListItem right={true}>
+                                                <Button
+                                                    type={ButtonType.action}
+                                                    onClick={this.toggleModal}
+                                                >
+                                                    Add collection
+                                                </Button>
+                                                <AddCollectionModal
+                                                    isOpen={showAddCollectionModal}
+                                                    onSubmitSuccess={() => this.onSubmitSuccess(refetch)}
+                                                    onClose={this.toggleModal}
+                                                />
+                                            </ListItem>
+                                        </List>
+                                    </ActionBar>
+                                </Wrap>
+                                <TableView>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>
+                                                    Name
+                                                </TableCell>
+                                                <TableCell>
+                                                    Created at
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {this.renderTableRows(data)}
+                                        </TableBody>
+                                    </Table>
+                                </TableView>
+                            </React.Fragment>
+                        )
+                    }}
                 </ListCollectionsQuery>
             </Page>
-        )
-    }
-
-    private renderQueryContent = ({ data, loading, refetch }: QueryContent<ListCollectionsQueryResponse>) => {
-        const { onQueryLoaded } = this.props
-        const { showAddCollectionModal } = this.state
-
-        if (loading || !data) {
-            return <Loader />
-        }
-
-        if (refetch && onQueryLoaded) {
-            onQueryLoaded(refetch)
-        }
-
-        return (
-            <React.Fragment>
-                <Wrap>
-                    <ActionBar>
-                        <List horizontal={true}>
-                            <ListItem right={true}>
-                                <Button
-                                    type={ButtonType.action}
-                                    onClick={this.toggleModal}
-                                >
-                                    Add collection
-                                </Button>
-                                <AddCollectionModal
-                                    isOpen={showAddCollectionModal}
-                                    onSubmitSuccess={() => this.onSubmitSuccess(refetch)}
-                                    onClose={this.toggleModal}
-                                />
-                            </ListItem>
-                        </List>
-                    </ActionBar>
-                </Wrap>
-                <TableView>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>
-                                    Name
-                                </TableCell>
-                                <TableCell>
-                                    Created at
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.renderTableRows(data)}
-                        </TableBody>
-                    </Table>
-                </TableView>
-            </React.Fragment>
         )
     }
 
@@ -137,7 +136,7 @@ export class CollectionsMasterView extends React.Component<Props, State> {
         ))
     }
 
-    private onSubmitSuccess = (refetch?: RefetchFunction<ListCollectionsQueryResponse>) => {
+    private onSubmitSuccess = (refetch?: ListCollectionsRefetchFunction) => {
         this.toggleModal()
 
         if (refetch) {
