@@ -2,6 +2,7 @@ import * as React from 'react'
 import gql from 'graphql-tag'
 import { Query, MutationFunc } from 'react-apollo'
 import { MutationContent } from '../../../types/Apollo'
+import { CollectionType } from '../../../types/Collection'
 
 const GET_COLLECTION_QUERY = gql`
     query($byId: MongoID!) {
@@ -18,11 +19,7 @@ export interface GetCollectionQueryVariables {
 }
 
 export interface GetCollectionQueryResponse {
-    getCollection?: {
-        _id: string
-        name: string
-        createdAt?: Date
-    }
+    getCollection?: CollectionType
 }
 
 export type GetCollectionMutationContent = MutationContent<GetCollectionQueryResponse>
