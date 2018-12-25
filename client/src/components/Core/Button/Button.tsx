@@ -7,30 +7,30 @@ import { Loader } from '../Feedback/Loader/Loader'
 
 interface Props {
     className?: string
-    type?: ButtonType
     disabled?: boolean
-    loading?: boolean
-    ghost?: boolean
-    onClick?: () => void
-    to?: string
-    href?: string
     external?: boolean
-    submit?: boolean
     form?: string
-    style?: CSSProperties
-    onMouseOver?: () => void
+    ghost?: boolean
+    href?: string
+    loading?: boolean
+    onClick?: () => void
     onMouseOut?: () => void
+    onMouseOver?: () => void
+    style?: CSSProperties
+    submit?: boolean
+    to?: string
+    type?: ButtonType
 }
 
 export enum ButtonType {
-    danger = 'danger',
-    confirm = 'confirm',
-    secondary = 'secondary',
-    tertiary = 'tertiary',
+    action = 'action',
     cancel = 'cancel',
+    confirm = 'confirm',
+    danger = 'danger',
     icon = 'icon',
     link = 'link',
-    action = 'action',
+    secondary = 'secondary',
+    tertiary = 'tertiary',
 }
 
 interface Modifiers {
