@@ -7,8 +7,8 @@ import { FieldCollection } from '../../../../components/Core/Field/FieldCollecti
 import { Loader } from '../../../../components/Core/Feedback/Loader/Loader'
 import { routes } from '../../../routes'
 import { GetCollectionQuery, GetCollectionMutationContent } from '../../../../components/Collections/Apollo/GetCollectionQuery'
-import { CollectionItemsFieldGroup } from '../../../../components/Collections/Data/CollectionItemsFieldGroup'
-import { GeneralFieldGroup } from '../../../../components/Collections/Data/GeneralFieldGroup'
+import { DataViewCollectionItemsFieldGroup } from '../../../../components/Collections/Data/DataViewCollectionItemsFieldGroup'
+import { DataViewGeneralFieldGroup } from '../../../../components/Collections/Data/DataViewGeneralFieldGroup'
 import { DataViewHeader } from '../../../../components/Collections/Data/DataViewHeader'
 import { DataViewPageActions } from '../../../../components/Collections/Data/DataViewPageActions'
 
@@ -51,8 +51,8 @@ export class CollectionsDataView extends React.Component<Props> {
                                 />
                                 <Wrap>
                                     <FieldCollection>
-                                        <GeneralFieldGroup collection={collection}/>
-                                        <CollectionItemsFieldGroup />
+                                        <DataViewGeneralFieldGroup collection={collection}/>
+                                        <DataViewCollectionItemsFieldGroup />
                                     </FieldCollection>
                                 </Wrap>
                             </React.Fragment>

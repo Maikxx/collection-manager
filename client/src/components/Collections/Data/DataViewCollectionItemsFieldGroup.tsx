@@ -7,7 +7,7 @@ import { Button, ButtonType } from '../../Core/Button/Button'
 
 interface Props {}
 
-export class CollectionItemsFieldGroup extends React.PureComponent<Props> {
+export class DataViewCollectionItemsFieldGroup extends React.PureComponent<Props> {
     public render() {
         return (
             <FieldGroup title={`Owned items`}>

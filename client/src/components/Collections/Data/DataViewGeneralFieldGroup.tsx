@@ -7,7 +7,7 @@ interface Props {
     collection?: CollectionType
 }
 
-export class GeneralFieldGroup extends React.PureComponent<Props> {
+export class DataViewGeneralFieldGroup extends React.PureComponent<Props> {
     public render() {
         const { collection } = this.props
         const { name, createdAt } = collection || { name: undefined, createdAt: undefined }
