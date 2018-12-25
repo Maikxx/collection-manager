@@ -1,8 +1,6 @@
 import './Button.scss'
 
 import React, { CSSProperties } from 'react'
-// import { IconType } from '~/components/Core/Icon/IconType'
-// import { Icon } from '~/components/Core/Icon/Icon'
 import { NavLink } from 'react-router-dom'
 import { BEM } from '../../../services/BEMService'
 import { Loader } from '../Feedback/Loader/Loader'
@@ -10,7 +8,6 @@ import { Loader } from '../Feedback/Loader/Loader'
 interface Props {
     className?: string
     type?: ButtonType
-    // icon?: IconType
     disabled?: boolean
     loading?: boolean
     ghost?: boolean
@@ -91,7 +88,6 @@ export class Button extends React.Component<Props> {
             className,
             disabled,
             form,
-            // icon,
             loading,
             style,
             submit,
@@ -116,9 +112,6 @@ export class Button extends React.Component<Props> {
                 onMouseOut={this.handleOnMouseOut}
             >
                 <span className={this.bem.getElement('inner')}>
-                    {/* {icon && (
-                        <Icon type={icon} className={this.bem.getElement('icon')} />
-                    )} */}
                     {children}
                 </span>
                 {loading && (
@@ -134,7 +127,6 @@ export class Button extends React.Component<Props> {
             className,
             external,
             loading,
-            // icon,
             style,
             to,
         } = this.props
@@ -152,9 +144,6 @@ export class Button extends React.Component<Props> {
                 style={style}
             >
                 <span className={this.bem.getElement('inner')}>
-                    {/* {icon && (
-                        <Icon type={icon} className={this.bem.getElement('icon')} />
-                    )} */}
                     <span className={this.bem.getElement('label')}>
                         {children}
                     </span>
@@ -173,7 +162,6 @@ export class Button extends React.Component<Props> {
             external,
             href,
             loading,
-            // icon,
         } = this.props
 
         if (!href) {
@@ -189,9 +177,6 @@ export class Button extends React.Component<Props> {
                 target={external ? '_blank' : undefined}
             >
                 <span className={this.bem.getElement('inner')}>
-                    {/* {icon && (
-                        <Icon type={icon} className={this.bem.getElement('icon')} />
-                    )} */}
                     <span className={this.bem.getElement('label')}>
                         {children}
                     </span>
