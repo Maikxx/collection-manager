@@ -6,7 +6,6 @@ import {
     ListCollectionsRefetchFunction,
     ListCollectionsQueryContent,
 } from '../../../components/Collections/Apollo/ListCollectionsQuery'
-import { Loader } from '../../../components/Core/Feedback/Loader/Loader'
 import { Wrap } from '../../../components/Core/Layout/Wrap/Wrap'
 import { TableView } from '../../../components/Core/DataDisplay/Table/TableView/TableView'
 import { ActionBar } from '../../../components/Chrome/ActionBar/ActionBar'
@@ -53,16 +52,12 @@ export class CollectionsMasterView extends React.Component<Props, State> {
                         const { onQueryLoaded } = this.props
                         const { showAddCollectionModal } = this.state
 
-                        if (loading || !data) {
-                            return <Loader />
-                        }
-
                         if (refetch && onQueryLoaded) {
                             onQueryLoaded(refetch)
                         }
 
-                        const { listCollections } = data
-                        const { nodes: collections } = listCollections
+                        const { listCollections } = data || { listCollections: undefined }
+                        const { nodes: collections } = listCollections || { nodes: undefined }
 
                         return (
                             <React.Fragment>
@@ -86,7 +81,10 @@ export class CollectionsMasterView extends React.Component<Props, State> {
                                     </ActionBar>
                                 </Wrap>
                                 <TableView>
-                                    <CollectionsTable collections={collections}/>
+                                    <CollectionsTable
+                                        collections={collections}
+                                        loading={loading}
+                                    />
                                 </TableView>
                             </React.Fragment>
                         )

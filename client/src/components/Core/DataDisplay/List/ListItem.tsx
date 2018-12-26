@@ -3,8 +3,8 @@ import * as React from 'react'
 import { BEM } from '../../../../services/BEMService'
 
 interface Props {
-    right?: boolean
     className?: string
+    right?: boolean
 }
 
 export class ListItem extends React.PureComponent<Props> {

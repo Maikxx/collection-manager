@@ -7,9 +7,11 @@ import { TableBody } from '../../../components/Core/DataDisplay/Table/Table/Tabl
 import { TextLink } from '../../Core/Text/TextLink/TextLink'
 import { routes } from '../../../views/routes'
 import { CollectionType } from '../../../types/Collection'
+import { Loader } from '../../Core/Feedback/Loader/Loader'
 
 interface Props {
     collections?: CollectionType[]
+    loading?: boolean
 }
 
 export class CollectionsTable extends React.Component<Props> {
@@ -34,7 +36,17 @@ export class CollectionsTable extends React.Component<Props> {
     }
 
     private renderTableRows = () => {
-        const { collections } = this.props
+        const { collections, loading } = this.props
+
+        if (loading) {
+            return (
+                <TableRow key={`loading`}>
+                    <TableCell colSpan={2}>
+                        <Loader />
+                    </TableCell>
+                </TableRow>
+            )
+        }
 
         if (!collections || !collections.length) {
             return null
