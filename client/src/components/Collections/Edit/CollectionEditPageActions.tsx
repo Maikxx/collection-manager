@@ -10,7 +10,7 @@ interface Props {
     onDelete: (mutate: DeleteCollectionMutationFunction) => void
 }
 
-export class EditViewPageActions extends React.Component<Props> {
+export class CollectionEditPageActions extends React.Component<Props> {
     public render() {
         const { loading, onCancel, onDelete } = this.props
 
