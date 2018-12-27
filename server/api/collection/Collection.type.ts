@@ -9,12 +9,30 @@ export const AddCollectionType = new GraphQLInputObjectType({
     }),
 })
 
+export const AddCollectedItemType = new GraphQLInputObjectType({
+    name: 'AddCollectedItemType',
+    fields: () => ({
+        _id: { type: GraphQLNonNull(MongoID) },
+        collectedItemName: { type: GraphQLNonNull(GraphQLString) },
+    }),
+})
+
+export const CollectedItemType = new GraphQLObjectType({
+    name: 'CollectedItemType',
+    fields: () => ({
+        _id: { type: GraphQLNonNull(MongoID) },
+        name: { type: GraphQLNonNull(GraphQLString) },
+        createdAt: { type: GraphQLNonNull(GraphQLDate) },
+    }),
+})
+
 export const CollectionType = new GraphQLObjectType({
     name: 'CollectionType',
     fields: () => ({
         _id: { type: GraphQLNonNull(MongoID) },
-        name: { type: GraphQLString },
-        createdAt: { type: GraphQLDate },
+        name: { type: GraphQLNonNull(GraphQLString) },
+        createdAt: { type: GraphQLNonNull(GraphQLDate) },
+        collectedItems: { type: GraphQLList(CollectedItemType) },
     }),
 })
 

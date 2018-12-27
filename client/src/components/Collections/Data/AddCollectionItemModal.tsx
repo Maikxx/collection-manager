@@ -8,16 +8,16 @@ import { FieldCollectionFooter } from '../../Core/Field/FieldCollectionFooter/Fi
 import { List } from '../../Core/DataDisplay/List/List'
 import { ListItem } from '../../Core/DataDisplay/List/ListItem'
 import { Button, ButtonType } from '../../Core/Button/Button'
-import { AddCollectionMutation, AddCollectionMutationFunction, AddCollectionMutationContent } from '../Apollo/AddCollectionMutation'
+import { AddCollectedItemMutation, AddCollectedItemMutationContent, AddCollectedItemMutationFunction } from '../Apollo/AddCollectedItemMutation'
 
 interface Props {
-    className?: string
+    collectionId: string
     isOpen: boolean
     onSubmitSuccess: () => void
     onClose: () => void
 }
 
-export class AddCollectionModal extends React.Component<Props> {
+export class AddCollectionItemModal extends React.Component<Props> {
     public render() {
         const { onClose, isOpen } = this.props
 
@@ -25,14 +25,18 @@ export class AddCollectionModal extends React.Component<Props> {
             <Modal
                 open={isOpen}
                 onClose={onClose}
-                title={`Add collection`}
+                title={`Add collected item`}
             >
-                <AddCollectionMutation>
-                    {(mutate: AddCollectionMutationFunction, { loading }: AddCollectionMutationContent) => (
-                        <Form onSubmit={this.onSubmit(mutate)} id={`addCollectionForm`}>
+                <AddCollectedItemMutation>
+                    {(mutate: AddCollectedItemMutationFunction, { loading }: AddCollectedItemMutationContent) => (
+                        <Form onSubmit={this.onSubmit(mutate)} id={`addCollectedItemForm`}>
                             <FieldCollection>
                                 <Field isLabel={true} title={`Name`}>
-                                    <Input name={`name`} type={`text`}/>
+                                    <Input
+                                        name={`name`}
+                                        type={`text`}
+                                        required={true}
+                                    />
                                 </Field>
                                 <FieldCollectionFooter>
                                     <List horizontal={true}>
@@ -46,7 +50,7 @@ export class AddCollectionModal extends React.Component<Props> {
                                         </ListItem>
                                         <ListItem right={true}>
                                             <Button
-                                                form={`addCollectionForm`}
+                                                form={`addCollectedItemForm`}
                                                 type={ButtonType.confirm}
                                                 loading={loading}
                                             >
@@ -58,25 +62,26 @@ export class AddCollectionModal extends React.Component<Props> {
                             </FieldCollection>
                         </Form>
                     )}
-                </AddCollectionMutation>
+                </AddCollectedItemMutation>
             </Modal>
         )
     }
 
-    private onSubmit = (mutateFunction: AddCollectionMutationFunction) =>
+    private onSubmit = (mutateFunction: AddCollectedItemMutationFunction) =>
         async (event: React.FormEvent<HTMLFormElement>) => {
-            const { onSubmitSuccess } = this.props
+            const { collectionId, onSubmitSuccess } = this.props
 
             const fields = getFieldsFromSubmitEvent(event)
             const response = await mutateFunction({
                 variables: {
                     collection: {
-                        name: fields.name,
+                        _id: collectionId,
+                        collectedItemName: fields.name,
                     },
                 },
             })
 
-            if (response && response.data && response.data.addCollection) {
+            if (response && response.data && response.data.addCollectedItem) {
                 onSubmitSuccess()
             }
         }

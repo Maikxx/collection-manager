@@ -6,9 +6,10 @@ import { TextField } from '@material-ui/core'
 interface Props {
     className?: string
     defaultValue?: string | number | any
-    name: string
-    type: string
     disabled?: boolean
+    name: string
+    required?: boolean
+    type: string
 }
 
 export class Input extends React.Component<Props> {

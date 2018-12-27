@@ -16,9 +16,9 @@
         padding-top: 12px;
         flex: 5;
         margin-left: 24px;
-    }
 
-    .cm-Field + .cm-Field {
-        margin-top: 12px;
+        > * + * {
+            margin-top: 12px;
+        }
     }
 }

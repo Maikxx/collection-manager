@@ -98,7 +98,7 @@ export class CollectionsMasterView extends React.Component<Props, State> {
         this.toggleModal()
 
         if (refetch) {
-            refetch()
+            refetch({ silent: true })
         }
     }
 

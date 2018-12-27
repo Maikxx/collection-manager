@@ -1,7 +1,7 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
-import { Query, MutationFunc } from 'react-apollo'
-import { MutationContent } from '../../../types/Apollo'
+import { Query } from 'react-apollo'
+import { QueryContent, RefetchFunction } from '../../../types/Apollo'
 import { CollectionType } from '../../../types/Collection'
 
 const GET_COLLECTION_QUERY = gql`
@@ -22,8 +22,8 @@ export interface GetCollectionQueryResponse {
     getCollection?: CollectionType
 }
 
-export type GetCollectionMutationContent = MutationContent<GetCollectionQueryResponse>
-export type GetCollectionMutationFunction = MutationFunc<GetCollectionQueryResponse, GetCollectionQueryVariables>
+export type GetCollectionQueryContent = QueryContent<GetCollectionQueryResponse>
+export type GetCollectionRefetchFunction = RefetchFunction<GetCollectionQueryResponse>
 
 interface Props {
     children: any
