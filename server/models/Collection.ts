@@ -1,7 +1,7 @@
-import * as mongoose from 'mongoose'
+import * as Mongoose from 'mongoose'
 
-export const Collection = mongoose.model('Collection', new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+export const Collection = Mongoose.model('Collection', new Mongoose.Schema({
+    _id: Mongoose.Schema.Types.ObjectId,
     createdAt: {
         type: Date,
         required: true,
@@ -11,13 +11,13 @@ export const Collection = mongoose.model('Collection', new mongoose.Schema({
         required: true,
     },
     collectedItems: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Mongoose.Schema.Types.ObjectId,
         ref: 'CollectedItem',
     }],
 }))
 
-export const CollectedItem = mongoose.model('CollectedItem', new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+export const CollectedItem = Mongoose.model('CollectedItem', new Mongoose.Schema({
+    _id: Mongoose.Schema.Types.ObjectId,
     createdAt: {
         type: Date,
         required: true,
@@ -27,7 +27,7 @@ export const CollectedItem = mongoose.model('CollectedItem', new mongoose.Schema
         required: true,
     },
     assignedCollection: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Mongoose.Schema.Types.ObjectId,
         ref: 'Collection',
     },
 }))
