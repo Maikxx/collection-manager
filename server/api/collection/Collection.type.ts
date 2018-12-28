@@ -1,6 +1,6 @@
 import { GraphQLInputObjectType, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } from 'graphql'
 import { GraphQLDate } from 'graphql-iso-date'
-import { MongoID } from '../../scalars/MongoID'
+import { MongoID } from '../../db/scalars/MongoID'
 
 export const AddCollectionType = new GraphQLInputObjectType({
     name: 'AddCollectionType',

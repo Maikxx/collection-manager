@@ -1,6 +1,6 @@
 import { CollectionService } from '../../domains/Collection/CollectionService'
 import { GenericMutationResponseType } from '../generic'
-import { MongoID } from '../../scalars/MongoID'
+import { MongoID } from '../../db/scalars/MongoID'
 import { GraphQLNonNull } from 'graphql'
 
 export interface DeleteCollectionFields {

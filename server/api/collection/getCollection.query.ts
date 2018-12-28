@@ -1,6 +1,6 @@
 import { CollectionType } from './Collection.type'
 import { CollectionService } from '../../domains/Collection/CollectionService'
-import { MongoID } from '../../scalars/MongoID'
+import { MongoID } from '../../db/scalars/MongoID'
 import { GraphQLNonNull } from 'graphql'
 
 export interface GetCollectionArgs {

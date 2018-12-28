@@ -1,6 +1,6 @@
 import { DeleteCollectionFields } from '../../api/collection/deleteCollection.mutation'
 import { ApolloError } from 'apollo-server-express'
-import { Collection } from '../../models/Collection'
+import { Collection } from '../../db/models/Collection'
 
 export const DeleteCollectionService = async (args: DeleteCollectionFields) => {
     const { _id } = args

@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-server-express'
-import { Collection } from '../../models/Collection'
+import { Collection } from '../../db/models/Collection'
 
 export const ListCollectionsService = async () => {
     try {

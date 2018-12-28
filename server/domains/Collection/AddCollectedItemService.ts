@@ -1,7 +1,7 @@
 import { ApolloError } from 'apollo-server-express'
-import { Collection, CollectedItem } from '../../models/Collection'
+import { Collection, CollectedItem } from '../../db/models/Collection'
 import { AddCollectedItemFields } from '../../api/collection/addCollectedItem.mutation'
-import { CollectedItemInterface } from '../../types/Collection'
+import { CollectedItemInterface } from '../../api/types/Collection'
 import { Types as MongooseTypes } from 'mongoose'
 
 export const AddCollectedItemService = async (args: AddCollectedItemFields) => {
