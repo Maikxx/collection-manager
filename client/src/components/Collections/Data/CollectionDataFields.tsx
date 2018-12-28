@@ -2,7 +2,7 @@ import * as React from 'react'
 import { FieldCollection } from '../../Core/Field/FieldCollection/FieldCollection'
 import { FieldGroup } from '../../Core/Field/FieldGroup/FieldGroup'
 import { Field } from '../../Core/Field/Field/Field'
-import { CollectionType } from '../../../types/Collection'
+import { CollectionType, CollectedItemType } from '../../../types/Collection'
 import { ActionBar } from '../../Chrome/ActionBar/ActionBar'
 import { List } from '../../Core/DataDisplay/List/List'
 import { ListItem } from '../../Core/DataDisplay/List/ListItem'
@@ -31,12 +31,13 @@ export class CollectionDataFields extends React.Component<Props, State> {
 
     public render() {
         const { collection } = this.props
-        const { _id, name, createdAt } = collection || { _id: undefined, name: undefined, createdAt: undefined }
-        const { showModal } = this.state
 
-        if (!_id) {
+        if (!collection) {
             return null
         }
+
+        const { _id, name, createdAt, collectedItems } = collection
+        const { showModal } = this.state
 
         return (
             <FieldCollection>
@@ -76,16 +77,22 @@ export class CollectionDataFields extends React.Component<Props, State> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
-                                <TableCell>
-                                    Call of Duty
-                                </TableCell>
-                            </TableRow>
+                            {(collectedItems && collectedItems.length > 0) && this.renderCollectedItemTableRows(collectedItems)}
                         </TableBody>
                     </Table>
                 </FieldGroup>
             </FieldCollection>
         )
+    }
+
+    private renderCollectedItemTableRows = (collectedItems: CollectedItemType[]) => {
+        return collectedItems.map(item => (
+            <TableRow key={item._id}>
+                <TableCell>
+                    {item.name}
+                </TableCell>
+            </TableRow>
+        ))
     }
 
     private onSubmitSuccess = () => {
