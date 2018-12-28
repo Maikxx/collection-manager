@@ -10,7 +10,10 @@ const GET_COLLECTION_QUERY = gql`
             _id
             name
             createdAt
-            collectedItems
+            collectedItems {
+                _id
+                name
+            }
         }
     }
 `
