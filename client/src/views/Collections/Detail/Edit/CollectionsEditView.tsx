@@ -6,7 +6,7 @@ import { Wrap } from '../../../../components/Core/Layout/Wrap/Wrap'
 import { routes } from '../../../routes'
 import { DeleteCollectionMutationFunction } from '../../../../components/Collections/Apollo/DeleteCollectionMutation'
 import { ListCollectionsRefetchFunction } from '../../../../components/Collections/Apollo/ListCollectionsQuery'
-import { GetCollectionQuery, GetCollectionMutationContent } from '../../../../components/Collections/Apollo/GetCollectionQuery'
+import { GetCollectionQuery } from '../../../../components/Collections/Apollo/GetCollectionQuery'
 import {
     EditCollectionMutation,
     EditCollectionMutationContent,
@@ -48,7 +48,7 @@ export class CollectionsEditView extends React.Component<Props> {
                     renderPageActions={() => this.renderPageActions(loading)}
                 >
                     <GetCollectionQuery variables={{ byId: id }}>
-                        {({ data, loading }: GetCollectionMutationContent) => {
+                        {({ data, loading }) => {
                             const { getCollection: collection } = data || { getCollection: undefined }
                             const { name } = collection || { name: undefined }
 

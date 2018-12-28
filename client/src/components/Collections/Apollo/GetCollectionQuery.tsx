@@ -10,6 +10,7 @@ const GET_COLLECTION_QUERY = gql`
             _id
             name
             createdAt
+            collectedItems
         }
     }
 `
@@ -26,7 +27,7 @@ export type GetCollectionQueryContent = QueryContent<GetCollectionQueryResponse>
 export type GetCollectionRefetchFunction = RefetchFunction<GetCollectionQueryResponse>
 
 interface Props {
-    children: any
+    children: (apolloProps: GetCollectionQueryContent) => JSX.Element
     variables: GetCollectionQueryVariables
 }
 

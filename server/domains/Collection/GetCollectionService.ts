@@ -6,7 +6,9 @@ export const GetCollectionService = async (args: GetCollectionArgs) => {
     const { byId } = args
 
     try {
-        const doc = await Collection.find({ _id: byId })
+        const doc = await Collection
+            .find({ _id: byId })
+            .populate('collectedItems')
 
         if (!doc || !doc.length) {
             throw new ApolloError('Collection does not exist', '404')

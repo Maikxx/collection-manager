@@ -1,11 +1,7 @@
 import * as React from 'react'
 import { BEM } from '../../../services/BEMService'
 import { Page } from '../../../components/Core/Layout/Page/Page'
-import {
-    ListCollectionsQuery,
-    ListCollectionsRefetchFunction,
-    ListCollectionsQueryContent,
-} from '../../../components/Collections/Apollo/ListCollectionsQuery'
+import { ListCollectionsQuery, ListCollectionsRefetchFunction } from '../../../components/Collections/Apollo/ListCollectionsQuery'
 import { Wrap } from '../../../components/Core/Layout/Wrap/Wrap'
 import { TableView } from '../../../components/Core/DataDisplay/Table/TableView/TableView'
 import { ActionBar } from '../../../components/Chrome/ActionBar/ActionBar'
@@ -48,7 +44,7 @@ export class CollectionsMasterView extends React.Component<Props, State> {
                     </BreadCrumbs>
                 </Header>
                 <ListCollectionsQuery>
-                    {({ data, loading, refetch }: ListCollectionsQueryContent) => {
+                    {({ data, loading, refetch }) => {
                         const { onQueryLoaded } = this.props
                         const { showAddCollectionModal } = this.state
 

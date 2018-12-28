@@ -30,7 +30,7 @@ export type EditCollectionMutationContent = MutationContent<EditCollectionMutati
 export type EditCollectionMutationFunction = MutationFunc<EditCollectionMutationResponse, EditCollectionMutationVariables>
 
 interface Props {
-    children: any
+    children: (mutateFunction: EditCollectionMutationFunction, apolloProps: EditCollectionMutationContent) => JSX.Element
 }
 
 export class EditCollectionMutation extends React.Component<Props> {

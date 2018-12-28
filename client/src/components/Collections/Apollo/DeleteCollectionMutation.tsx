@@ -25,7 +25,7 @@ export type DeleteCollectionMutationContent = MutationContent<DeleteCollectionMu
 export type DeleteCollectionMutationFunction = MutationFunc<DeleteCollectionMutationResponse, DeleteCollectionMutationVariables>
 
 interface Props {
-    children: any
+    children: (mutationFunction: DeleteCollectionMutationFunction, apolloProps: DeleteCollectionMutationContent) => JSX.Element
 }
 
 export class DeleteCollectionMutation extends React.Component<Props> {

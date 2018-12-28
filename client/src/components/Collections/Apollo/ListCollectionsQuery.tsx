@@ -2,6 +2,7 @@ import * as React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { RefetchFunction, QueryContent } from '../../../types/Apollo'
+import { CollectionType } from '../../../types/Collection'
 
 const LIST_COLLECTIONS_QUERY = gql`
     query {
@@ -10,6 +11,7 @@ const LIST_COLLECTIONS_QUERY = gql`
                 _id
                 createdAt
                 name
+                collectedItems
             }
         }
     }
@@ -17,11 +19,7 @@ const LIST_COLLECTIONS_QUERY = gql`
 
 export interface ListCollectionsQueryResponse {
     listCollections: {
-        nodes: {
-            _id: string
-            createdAt: Date
-            name: string
-        }[]
+        nodes: CollectionType[]
     }
 }
 
@@ -29,7 +27,7 @@ export type ListCollectionsRefetchFunction = RefetchFunction<ListCollectionsQuer
 export type ListCollectionsQueryContent = QueryContent<ListCollectionsQueryResponse>
 
 interface Props {
-    children: any
+    children: (apolloProps: ListCollectionsQueryContent) => JSX.Element
 }
 
 export class ListCollectionsQuery extends React.Component<Props> {

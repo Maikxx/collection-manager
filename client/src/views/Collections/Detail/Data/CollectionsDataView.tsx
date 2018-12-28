@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Page } from '../../../../components/Core/Layout/Page/Page'
 import { Wrap } from '../../../../components/Core/Layout/Wrap/Wrap'
 import { routes } from '../../../routes'
-import { GetCollectionQuery, GetCollectionQueryContent } from '../../../../components/Collections/Apollo/GetCollectionQuery'
+import { GetCollectionQuery } from '../../../../components/Collections/Apollo/GetCollectionQuery'
 import { BreadCrumbs } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumbs'
 import { BreadCrumb } from '../../../../components/Core/Layout/BreadCrumbs/BreadCrumb'
 import { TextLink } from '../../../../components/Core/Text/TextLink/TextLink'
@@ -32,7 +32,7 @@ export class CollectionsDataView extends React.Component<Props> {
                 renderPageActions={this.renderPageActions}
             >
                 <GetCollectionQuery variables={{ byId: id }}>
-                    {({ loading, data, refetch }: GetCollectionQueryContent) => {
+                    {({ loading, data, refetch }) => {
                         const { getCollection: collection } = data || { getCollection: undefined }
                         const { name } = collection || { name: undefined }
 

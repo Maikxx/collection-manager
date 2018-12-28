@@ -3,7 +3,8 @@ import { Collection } from '../../models/Collection'
 
 export const ListCollectionsService = async () => {
     try {
-        const docs = await Collection.find({})
+        const docs = await Collection
+            .find({})
             .populate('collectedItems')
 
         return docs
