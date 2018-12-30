@@ -1,27 +1,26 @@
 import { AddCollectionFields } from '../../api/collection/addCollection.mutation'
 import { ApolloError } from 'apollo-server-express'
-import { Collection } from '../../db/models/Collection'
-import { Types as MongooseTypes } from 'mongoose'
+import { database } from '../../db/db'
 
 export const AddCollectionService = async (args: AddCollectionFields) => {
     const { name } = args.collection
 
     try {
-        const existingDocumentWithName = await Collection
-            .findOne({ name: { $regex: new RegExp(name, 'i') }})
+        const { rowCount: existingRowCount } = await database.query(
+            'SELECT name FROM collections WHERE LOWER(name) = LOWER($1);',
+            [name]
+        )
 
-        if (existingDocumentWithName !== null) {
+        if (existingRowCount > 0) {
             throw new ApolloError('Name already exists', '409')
         }
 
-        const collection = new Collection({
-            _id: new MongooseTypes.ObjectId(),
-            createdAt: new Date(Date.now()),
-            name,
-        })
+        const { rows } = await database.query(
+            'INSERT INTO collections (name) VALUES ($1) RETURNING *;',
+            [name]
+        )
 
-        const response = await collection.save()
-        return response
+        return rows[0]
     } catch (error) {
         throw new ApolloError(error.message, '500')
     }

@@ -1,40 +1,26 @@
 import { ApolloError } from 'apollo-server-express'
-import { Collection, CollectedItem } from '../../db/models/Collection'
 import { AddCollectedItemFields } from '../../api/collection/addCollectedItem.mutation'
-import { CollectedItemInterface } from '../../api/types/Collection'
-import { Types as MongooseTypes } from 'mongoose'
+import { database } from '../../db/db'
 
 export const AddCollectedItemService = async (args: AddCollectedItemFields) => {
-    const { _id, collectedItemName: newItemName } = args.collection
+    const { _id, collectedItemName } = args.collection
 
     try {
-        const collection = await Collection
-            .findOne({ _id: _id })
-            .populate('collectedItems')
+        const { rowCount: existingRowCount } = await database.query(
+            'SELECT * FROM "collectedItems" WHERE LOWER(name) = LOWER($1) AND "collectionId" = $2;',
+            [ collectedItemName, _id ]
+        )
 
-        if (!collection) {
-            throw new ApolloError('No document with the given id exists', '404')
+        if (existingRowCount > 0) {
+            throw new ApolloError('Name for this item already already exists within the collection', '409')
         }
 
-        const collectedItems = collection.get('collectedItems') as CollectedItemInterface[]
+        const { rows } = await database.query(
+            'INSERT INTO "collectedItems" (name, "collectionId") VALUES ($1, $2) RETURNING *;',
+            [ collectedItemName, _id ]
+        )
 
-        if (collectedItems && collectedItems.filter(item => item.name === newItemName).length > 0) {
-            throw new ApolloError('A collected item with the given name already exists', '409')
-        }
-
-        const newCollectedItem = new CollectedItem({
-            _id: new MongooseTypes.ObjectId(),
-            createdAt: new Date(Date.now()),
-            name: newItemName,
-            assignedCollection: _id,
-        })
-        const newCollectedItemId = newCollectedItem.get('_id')
-
-        const updatedCollection = await Collection
-            .findByIdAndUpdate({ _id }, { $push: { collectedItems: newCollectedItemId }}, { new: true })
-            .populate('collectedItems')
-
-        return updatedCollection
+        return rows[0]
     } catch (error) {
         throw new ApolloError(error.message, '500')
     }

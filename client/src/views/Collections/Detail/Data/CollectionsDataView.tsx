@@ -31,7 +31,7 @@ export class CollectionsDataView extends React.Component<Props> {
                 hasPageHeader={true}
                 renderPageActions={this.renderPageActions}
             >
-                <GetCollectionQuery variables={{ byId: id }}>
+                <GetCollectionQuery variables={{ byId: Number(id) }}>
                     {({ loading, data, refetch }) => {
                         const { getCollection: collection } = data || { getCollection: undefined }
                         const { name } = collection || { name: undefined }

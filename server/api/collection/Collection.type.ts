@@ -1,6 +1,5 @@
-import { GraphQLInputObjectType, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } from 'graphql'
+import { GraphQLInputObjectType, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull, GraphQLInt } from 'graphql'
 import { GraphQLDate } from 'graphql-iso-date'
-import { MongoID } from '../../db/scalars/MongoID'
 
 export const AddCollectionType = new GraphQLInputObjectType({
     name: 'AddCollectionType',
@@ -12,7 +11,7 @@ export const AddCollectionType = new GraphQLInputObjectType({
 export const AddCollectedItemType = new GraphQLInputObjectType({
     name: 'AddCollectedItemType',
     fields: () => ({
-        _id: { type: GraphQLNonNull(MongoID) },
+        _id: { type: GraphQLNonNull(GraphQLInt) },
         collectedItemName: { type: GraphQLNonNull(GraphQLString) },
     }),
 })
@@ -20,7 +19,7 @@ export const AddCollectedItemType = new GraphQLInputObjectType({
 export const CollectedItemType = new GraphQLObjectType({
     name: 'CollectedItemType',
     fields: () => ({
-        _id: { type: GraphQLNonNull(MongoID) },
+        _id: { type: GraphQLNonNull(GraphQLInt) },
         name: { type: GraphQLNonNull(GraphQLString) },
         createdAt: { type: GraphQLNonNull(GraphQLDate) },
     }),
@@ -29,7 +28,7 @@ export const CollectedItemType = new GraphQLObjectType({
 export const CollectionType = new GraphQLObjectType({
     name: 'CollectionType',
     fields: () => ({
-        _id: { type: GraphQLNonNull(MongoID) },
+        _id: { type: GraphQLNonNull(GraphQLInt) },
         name: { type: GraphQLNonNull(GraphQLString) },
         createdAt: { type: GraphQLNonNull(GraphQLDate) },
         collectedItems: { type: GraphQLList(CollectedItemType) },
@@ -39,7 +38,7 @@ export const CollectionType = new GraphQLObjectType({
 export const EditCollectionType = new GraphQLInputObjectType({
     name: 'EditCollectionType',
     fields: () => ({
-        _id: { type: GraphQLNonNull(MongoID) },
+        _id: { type: GraphQLNonNull(GraphQLInt) },
         name: { type: GraphQLNonNull(GraphQLString) },
     }),
 })

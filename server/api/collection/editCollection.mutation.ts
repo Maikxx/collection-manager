@@ -4,7 +4,7 @@ import { GraphQLNonNull } from 'graphql'
 
 export interface EditCollectionArgs {
     collection: {
-        _id: string
+        _id: number
         name: string
     }
 }

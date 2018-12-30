@@ -1,19 +1,20 @@
 import { DeleteCollectionFields } from '../../api/collection/deleteCollection.mutation'
 import { ApolloError } from 'apollo-server-express'
-import { Collection } from '../../db/models/Collection'
+import { database } from '../../db/db'
 
 export const DeleteCollectionService = async (args: DeleteCollectionFields) => {
     const { _id } = args
     try {
-        const doc = await Collection.find({ _id })
+        const { rowCount } = await database.query(
+            'DELETE FROM collections WHERE _id = $1;',
+            [_id]
+        )
 
-        if (!doc || !doc.length) {
-            throw new ApolloError('Document does not exist', '404')
+        if (rowCount > 0) {
+            return { success: true }
         }
 
-        await Collection.find({ _id }).remove()
-
-        return { success: true }
+        return { success: false }
     } catch (error) {
         throw new ApolloError(error.message, '500')
     }

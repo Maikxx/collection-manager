@@ -1,12 +1,12 @@
 export interface CollectedItemType {
-    _id: string
+    _id: number
     name: string
     createdAt: Date
     assignedCollection?: CollectionType
 }
 
 export interface CollectionType {
-    _id: string
+    _id: number
     name: string
     createdAt: Date
     collectedItems?: CollectedItemType[]

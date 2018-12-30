@@ -4,7 +4,7 @@ import { Mutation, MutationFunc } from 'react-apollo'
 import { MutationContent } from '../../../types/Apollo'
 
 const DELETE_COLLECTION_MUTATION = gql`
-    mutation($_id: MongoID!) {
+    mutation($_id: Int!) {
         deleteCollection(_id: $_id) {
             success
         }
@@ -18,7 +18,7 @@ export interface DeleteCollectionMutationResponse {
 }
 
 export interface DeleteCollectionMutationVariables {
-    _id: string
+    _id: number
 }
 
 export type DeleteCollectionMutationContent = MutationContent<DeleteCollectionMutationResponse>

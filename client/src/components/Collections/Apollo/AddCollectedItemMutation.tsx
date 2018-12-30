@@ -13,7 +13,7 @@ const ADD_COLLECTED_ITEM_MUTATION = gql`
 
 export interface AddCollectedItemMutationVariables {
     collection: {
-        _id: string
+        _id: number
         collectedItemName: string
     }
 }
@@ -21,7 +21,7 @@ export interface AddCollectedItemMutationVariables {
 export interface AddCollectedItemMutationResponse {
     addCollectedItem: {
         collection: {
-            _id: string
+            _id: number
         }
     }
 }

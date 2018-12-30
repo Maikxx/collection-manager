@@ -4,7 +4,7 @@ import { GraphQLNonNull } from 'graphql'
 
 export interface AddCollectedItemFields {
     collection: {
-        _id: string
+        _id: number
         collectedItemName: string
     }
 }

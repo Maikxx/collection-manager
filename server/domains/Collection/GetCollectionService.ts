@@ -1,20 +1,29 @@
 import { GetCollectionArgs } from '../../api/collection/getCollection.query'
 import { ApolloError } from 'apollo-server-express'
-import { Collection } from '../../db/models/Collection'
+import { database } from '../../db/db'
 
 export const GetCollectionService = async (args: GetCollectionArgs) => {
-    const { byId } = args
+    const { byId: _id } = args
 
     try {
-        const doc = await Collection
-            .find({ _id: byId })
-            .populate('collectedItems')
+        const { rowCount: collectionRowCount, rows: collections } = await database.query(
+            'SELECT * FROM collections WHERE _id = $1;',
+            [_id]
+        )
 
-        if (!doc || !doc.length) {
+        if (collectionRowCount === 0) {
             throw new ApolloError('Collection does not exist', '404')
         }
 
-        return doc[0]
+        const { rows: collectedItems } = await database.query(
+            'SELECT * FROM "collectedItems" WHERE "collectionId" = $1;',
+            [_id]
+        )
+
+        return {
+            ...collections[0],
+            collectedItems: collectedItems,
+        }
     } catch (error) {
         throw new ApolloError(error.message, '500')
     }

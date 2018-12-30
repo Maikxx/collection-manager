@@ -13,7 +13,7 @@ const EDIT_COLLECTION_MUTATION = gql`
 
 export interface EditCollectionMutationVariables {
     collection: {
-        _id: string
+        _id: number
         name: string
     }
 }
@@ -21,7 +21,7 @@ export interface EditCollectionMutationVariables {
 export interface EditCollectionMutationResponse {
     editCollection: {
         collection: {
-            _id: string
+            _id: number
         }
     }
 }

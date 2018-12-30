@@ -20,7 +20,7 @@ export interface AddCollectionMutationVariables {
 export interface AddCollectionMutationResponse {
     addCollection: {
         collection: {
-            _id: string
+            _id: number
         }
     }
 }

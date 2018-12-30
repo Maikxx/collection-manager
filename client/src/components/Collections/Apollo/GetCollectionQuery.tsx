@@ -5,7 +5,7 @@ import { QueryContent, RefetchFunction } from '../../../types/Apollo'
 import { CollectionType } from '../../../types/Collection'
 
 const GET_COLLECTION_QUERY = gql`
-    query($byId: MongoID!) {
+    query($byId: Int!) {
         getCollection(byId: $byId) {
             _id
             name
@@ -19,7 +19,7 @@ const GET_COLLECTION_QUERY = gql`
 `
 
 export interface GetCollectionQueryVariables {
-    byId: string
+    byId: number
 }
 
 export interface GetCollectionQueryResponse {

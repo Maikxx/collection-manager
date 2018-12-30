@@ -47,7 +47,7 @@ export class CollectionsEditView extends React.Component<Props> {
                     hasPageHeader={true}
                     renderPageActions={() => this.renderPageActions(loading)}
                 >
-                    <GetCollectionQuery variables={{ byId: id }}>
+                    <GetCollectionQuery variables={{ byId: Number(id) }}>
                         {({ data, loading }) => {
                             const { getCollection: collection } = data || { getCollection: undefined }
                             const { name } = collection || { name: undefined }
@@ -101,7 +101,7 @@ export class CollectionsEditView extends React.Component<Props> {
             const response = await mutateEdit({
                 variables: {
                     collection: {
-                        _id: id,
+                        _id: Number(id),
                         name: fields.name,
                     },
                 },
@@ -120,7 +120,7 @@ export class CollectionsEditView extends React.Component<Props> {
         const { history, match, refetch } = this.props
         const { id } = match.params
 
-        const response = await mutateDelete({ variables: { _id: id }})
+        const response = await mutateDelete({ variables: { _id: Number(id) }})
 
         if (response && response.data && response.data.deleteCollection) {
             if (refetch) {
