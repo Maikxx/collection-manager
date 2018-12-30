@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-server-express'
-import { AddCollectedItemFields } from '../../api/collection/addCollectedItem.mutation'
+import { AddCollectedItemFields } from '../../api/collectedItem/addCollectedItem.mutation'
 import { database } from '../../db/db'
 
 export const AddCollectedItemService = async (args: AddCollectedItemFields) => {

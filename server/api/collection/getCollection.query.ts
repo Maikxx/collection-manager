@@ -1,6 +1,6 @@
 import { CollectionType } from './Collection.type'
-import { CollectionService } from '../../domains/Collection/CollectionService'
 import { GraphQLNonNull, GraphQLInt } from 'graphql'
+import { GetCollectionService } from '../../domains/Collection/GetCollectionService'
 
 export interface GetCollectionArgs {
     byId: number
@@ -11,10 +11,7 @@ export const getCollection = () => ({
     args: {
         byId: { type: GraphQLNonNull(GraphQLInt) },
     },
-    resolve: async (_, args) => {
-        const collectionService = CollectionService()
-
-        const collection = await collectionService.GetCollection(args)
-        return collection
+    resolve: async (_, args: GetCollectionArgs) => {
+        return GetCollectionService(args)
     },
 })

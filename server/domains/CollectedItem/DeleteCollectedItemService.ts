@@ -1,4 +1,4 @@
-import { DeleteCollectedItemFields } from '../../api/collection/deleteCollectedItem.mutation'
+import { DeleteCollectedItemFields } from '../../api/collectedItem/deleteCollectedItem.mutation'
 import { database } from '../../db/db'
 import { ApolloError } from 'apollo-server-core'
 

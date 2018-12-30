@@ -1,6 +1,7 @@
-import { CollectionType, AddCollectedItemType } from './Collection.type'
-import { CollectionService } from '../../domains/Collection/CollectionService'
+import { CollectionType } from '../collection/Collection.type'
 import { GraphQLNonNull } from 'graphql'
+import { AddCollectedItemType } from './CollectedItem.type'
+import { AddCollectedItemService } from '../../domains/CollectedItem/AddCollectedItemService'
 
 export interface AddCollectedItemFields {
     collection: {
@@ -15,8 +16,6 @@ export const addCollectedItem = () => ({
         collection: { type: GraphQLNonNull(AddCollectedItemType) },
     },
     resolve: (_, args: AddCollectedItemFields) => {
-        const collectionService = CollectionService()
-
-        return collectionService.AddCollectedItem(args)
+        return AddCollectedItemService(args)
     },
 })

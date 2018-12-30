@@ -1,6 +1,6 @@
 import { CollectionType, EditCollectionType } from './Collection.type'
-import { CollectionService } from '../../domains/Collection/CollectionService'
 import { GraphQLNonNull } from 'graphql'
+import { EditCollectionService } from '../../domains/Collection/EditCollectionService'
 
 export interface EditCollectionArgs {
     collection: {
@@ -15,8 +15,6 @@ export const editCollection = () => ({
         collection: { type: GraphQLNonNull(EditCollectionType) },
     },
     resolve: (_, args: EditCollectionArgs) => {
-        const collectionService = CollectionService()
-
-        return collectionService.EditCollection(args)
+        return EditCollectionService(args)
     },
 })

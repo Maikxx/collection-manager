@@ -1,6 +1,6 @@
-import { CollectionService } from '../../domains/Collection/CollectionService'
 import { GenericMutationResponseType } from '../generic'
 import { GraphQLNonNull, GraphQLInt } from 'graphql'
+import { DeleteCollectionService } from '../../domains/Collection/DeleteCollectionService'
 
 export interface DeleteCollectionFields {
     _id: number
@@ -12,8 +12,6 @@ export const deleteCollection = () => ({
         _id: { type: GraphQLNonNull(GraphQLInt) },
     },
     resolve: (_, args: DeleteCollectionFields) => {
-        const collectionService = CollectionService()
-
-        return collectionService.DeleteCollection(args)
+        return DeleteCollectionService(args)
     },
 })
