@@ -15,6 +15,7 @@ import { TableBody } from '../../Core/DataDisplay/Table/Table/TableBody'
 import { AddCollectionItemModal } from './AddCollectionItemModal'
 import { GetCollectionRefetchFunction } from '../Apollo/GetCollectionQuery'
 import { ReadableDate } from '../../Core/DataDisplay/Date/ReadableDate'
+import { DeleteCollectedItemMutation, DeleteCollectedItemMutationFunction } from '../Apollo/DeleteCollectedItemMutation'
 
 interface Props {
     collection?: CollectionType
@@ -78,6 +79,7 @@ export class CollectionDataFields extends React.Component<Props, State> {
                                 <TableCell>
                                     Added on
                                 </TableCell>
+                                <TableCell/>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -98,8 +100,33 @@ export class CollectionDataFields extends React.Component<Props, State> {
                 <TableCell>
                     <ReadableDate date={item.createdAt}/>
                 </TableCell>
+                <TableCell>
+                    <DeleteCollectedItemMutation>
+                        {(mutate, { loading }) => (
+                            <Button
+                                loading={loading}
+                                onClick={() => this.onDelete(mutate, item._id)}
+                                type={ButtonType.danger}
+                            >
+                                Delete {item.name}
+                            </Button>
+                        )}
+                    </DeleteCollectedItemMutation>
+                </TableCell>
             </TableRow>
         ))
+    }
+
+    private onDelete = async (mutateDelete: DeleteCollectedItemMutationFunction, id: number) => {
+        const { refetchCollection } = this.props
+
+        const response = await mutateDelete({ variables: { _id: id }})
+
+        if (response && response.data && response.data.deleteCollectedItem) {
+            if (refetchCollection) {
+                refetchCollection({ silent: true })
+            }
+        }
     }
 
     private onSubmitSuccess = () => {
