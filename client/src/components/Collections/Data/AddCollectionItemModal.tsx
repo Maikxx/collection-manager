@@ -11,7 +11,7 @@ import { Button, ButtonType } from '../../Core/Button/Button'
 import { AddCollectedItemMutation, AddCollectedItemMutationContent, AddCollectedItemMutationFunction } from '../Apollo/AddCollectedItemMutation'
 
 interface Props {
-    collectionId: string
+    collectionId: number
     isOpen: boolean
     onSubmitSuccess: () => void
     onClose: () => void

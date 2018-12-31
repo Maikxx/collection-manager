@@ -14,6 +14,7 @@ import { TableCell } from '../../Core/DataDisplay/Table/Table/TableCell'
 import { TableBody } from '../../Core/DataDisplay/Table/Table/TableBody'
 import { AddCollectionItemModal } from './AddCollectionItemModal'
 import { GetCollectionRefetchFunction } from '../Apollo/GetCollectionQuery'
+import { ReadableDate } from '../../Core/DataDisplay/Date/ReadableDate'
 
 interface Props {
     collection?: CollectionType
@@ -74,6 +75,9 @@ export class CollectionDataFields extends React.Component<Props, State> {
                                 <TableCell>
                                     Name
                                 </TableCell>
+                                <TableCell>
+                                    Added on
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -90,6 +94,9 @@ export class CollectionDataFields extends React.Component<Props, State> {
             <TableRow key={item._id}>
                 <TableCell>
                     {item.name}
+                </TableCell>
+                <TableCell>
+                    <ReadableDate date={item.createdAt}/>
                 </TableCell>
             </TableRow>
         ))

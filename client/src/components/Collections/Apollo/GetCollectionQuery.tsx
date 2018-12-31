@@ -13,6 +13,7 @@ const GET_COLLECTION_QUERY = gql`
             collectedItems {
                 _id
                 name
+                createdAt
             }
         }
     }
