@@ -22,7 +22,9 @@ if (process.env.NODE !== 'production') {
         console.info(`GraphQL is now running on http://localhost:5000${server.graphqlPath}`)
     })
 
-    app.on('sigterm', () => {
-        spawn('sh', ['./db/stop_db.sh'])
-    })
+    if (process.env.NODE !== 'production') {
+        app.on('sigterm', () => {
+            spawn('sh', ['./db/stop_db.sh'])
+        })
+    }
 })()
