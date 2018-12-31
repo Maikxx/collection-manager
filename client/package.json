@@ -5,9 +5,8 @@
   "author": "Maikel van Veen <maikeloo10@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn clear-dist && parcel build public/index.html --no-source-maps && yarn move-html-file",
+    "build": "yarn clear-dist && parcel build public/index.html --no-source-maps",
     "clear-dist": "rm -rf dist/",
-    "move-html-file": "mv dist/index.html ./index.html",
     "open-chrome": "wait-on http://localhost:1234 && open -a \"Google Chrome\" http://localhost:1234",
     "start-client": "yarn clear-dist && concurrently \"yarn watch-client\" \"yarn open-chrome\" --raw",
     "watch-client": "parcel public/index.html --no-source-maps"
