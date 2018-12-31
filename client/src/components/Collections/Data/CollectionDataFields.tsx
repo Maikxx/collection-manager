@@ -48,7 +48,7 @@ export class CollectionDataFields extends React.Component<Props, State> {
                         {name}
                     </Field>
                     <Field title={`Created at`}>
-                        {createdAt}
+                        <ReadableDate date={createdAt}/>
                     </Field>
                 </FieldGroup>
                 <FieldGroup title={`Owned items`}>
