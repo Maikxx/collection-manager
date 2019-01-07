@@ -9,7 +9,7 @@
     "clear-dist": "rm -rf dist/",
     "open-chrome": "wait-on http://localhost:1234 && open -a \"Google Chrome\" http://localhost:1234",
     "start-client": "yarn clear-dist && concurrently \"yarn watch-client\" \"yarn open-chrome\" --raw",
-    "watch-client": "parcel public/index.html --no-source-maps"
+    "watch-client": "parcel public/index.html"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.6",
