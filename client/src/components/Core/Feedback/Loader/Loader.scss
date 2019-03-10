@@ -1,4 +1,14 @@
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .cm-Loader {
-    width: 20px!important;
-    height: 20px!important;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-top: 3px solid #000000;
+    border-right: 3px solid transparent;
+    animation: spin .6s linear infinite;
 }

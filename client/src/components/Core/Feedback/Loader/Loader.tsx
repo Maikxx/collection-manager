@@ -1,6 +1,5 @@
 import './Loader.scss'
 import * as React from 'react'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import { BEM } from '../../../../services/BEMService'
 
 interface Props {
@@ -14,7 +13,7 @@ export class Loader extends React.PureComponent<Props> {
         const { className } = this.props
 
         return (
-            <CircularProgress className={this.bem.getClassName(className)}/>
+            <i className={this.bem.getClassName(className)}/>
         )
     }
 }

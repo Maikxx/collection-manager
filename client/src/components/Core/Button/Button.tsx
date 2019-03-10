@@ -57,8 +57,6 @@ export class Button extends React.Component<Props> {
             disabled,
         } = this.props
 
-        // Anchor tags cannot be "disabled". So if disabled is true and the component is a link
-        // render a disabled button
         if ((to || href) && disabled) {
             return this.renderButton()
         }
