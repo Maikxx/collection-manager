@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start-db": "brew services start postgres",
-    "start-server": "yarn start-db && nodemon --watch './**/*' -e ts --exec 'ts-node' ./index.ts"
+    "start-server": "yarn start-db && nodemon --watch './**/*' -e ts --exec 'ts-node' ./index.ts",
+    "lint": "tslint -p . -c tslint.json \"**/*.ts\" \"**/*.tsx\""
   },
   "dependencies": {
     "apollo-server-express": "^2.3.1",
@@ -26,6 +27,9 @@
     "@types/helmet": "^0.0.42",
     "@types/pg": "^7.4.11",
     "nodemon": "^1.18.9",
-    "ts-node": "^7.0.1"
+    "ts-node": "^7.0.1",
+    "tslint": "^5.13.1",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.3.3333"
   }
 }

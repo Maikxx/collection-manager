@@ -26,6 +26,9 @@
     "json5": "^2.1.0",
     "parcel-bundler": "^1.10.3",
     "sass": "^1.15.2",
+    "tslint": "^5.13.1",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^3.6.0",
     "typescript": "^3.2.2",
     "wait-on": "^3.2.0"
   },
