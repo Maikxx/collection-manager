@@ -30,7 +30,8 @@
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^3.6.0",
     "typescript": "^3.2.2",
-    "wait-on": "^3.2.0"
+    "wait-on": "^3.2.0",
+    "yarn": "^1.13.0"
   },
   "dependencies": {
     "@material-ui/core": "^3.6.2",
