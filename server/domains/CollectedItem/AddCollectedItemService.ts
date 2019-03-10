@@ -2,13 +2,13 @@ import { ApolloError } from 'apollo-server-express'
 import { AddCollectedItemFields } from '../../api/collectedItem/addCollectedItem.mutation'
 import { database } from '../../db/db'
 
-export const AddCollectedItemService = async (args: AddCollectedItemFields) => {
-    const { _id, collectedItemName } = args.collection
+export async function AddCollectedItemService(args: AddCollectedItemFields) {
+    const { collection: { _id, name, description } } = args
 
     try {
         const { rowCount: existingRowCount } = await database.query(
-            'SELECT * FROM "collectedItems" WHERE LOWER(name) = LOWER($1) AND "collectionId" = $2;',
-            [ collectedItemName, _id ]
+            `SELECT * FROM "collectedItems" WHERE LOWER(name) = LOWER($1) AND "collectionId" = $2;`,
+            [ name, _id ]
         )
 
         if (existingRowCount > 0) {
@@ -16,8 +16,8 @@ export const AddCollectedItemService = async (args: AddCollectedItemFields) => {
         }
 
         const { rows } = await database.query(
-            'INSERT INTO "collectedItems" (name, "collectionId") VALUES ($1, $2) RETURNING *;',
-            [ collectedItemName, _id ]
+            'INSERT INTO "collectedItems" (name, "collectionId", description) VALUES ($1, $2, $3) RETURNING *;',
+            [ name, _id, description ]
         )
 
         return rows[0]

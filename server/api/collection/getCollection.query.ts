@@ -11,7 +11,5 @@ export const getCollection = () => ({
     args: {
         byId: { type: GraphQLNonNull(GraphQLInt) },
     },
-    resolve: async (_, args: GetCollectionArgs) => {
-        return GetCollectionService(args)
-    },
+    resolve: (_, args: GetCollectionArgs) => GetCollectionService(args),
 })

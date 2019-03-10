@@ -34,6 +34,9 @@ export class AddCollectionModal extends React.Component<Props> {
                                 <Field isLabel={true} title={`Name`}>
                                     <Input name={`name`} type={`text`}/>
                                 </Field>
+                                <Field isLabel={true} title={`Description`}>
+                                    <Input name={`description`} type={`text`}/>
+                                </Field>
                                 <FieldCollectionFooter>
                                     <List horizontal={true}>
                                         <ListItem right={true}>
@@ -63,15 +66,16 @@ export class AddCollectionModal extends React.Component<Props> {
         )
     }
 
-    private onSubmit = (mutateFunction: AddCollectionMutationFunction) =>
+    private onSubmit = (mutate: AddCollectionMutationFunction) =>
         async (event: React.FormEvent<HTMLFormElement>) => {
             const { onSubmitSuccess } = this.props
 
             const fields = getFieldsFromSubmitEvent(event)
-            const response = await mutateFunction({
+            const response = await mutate({
                 variables: {
                     collection: {
                         name: fields.name,
+                        description: fields.description || null,
                     },
                 },
             })

@@ -9,6 +9,7 @@ import { routes } from '../../../views/routes'
 import { CollectionType } from '../../../types/Collection'
 import { Loader } from '../../Core/Feedback/Loader/Loader'
 import { ReadableDate } from '../../Core/DataDisplay/Date/ReadableDate'
+import { TransformString } from '../../../utils/TransformString'
 
 interface Props {
     collections?: CollectionType[]
@@ -23,6 +24,9 @@ export class CollectionsTable extends React.Component<Props> {
                     <TableRow>
                         <TableCell>
                             Name
+                        </TableCell>
+                        <TableCell>
+                            Description
                         </TableCell>
                         <TableCell>
                             Created at
@@ -59,6 +63,9 @@ export class CollectionsTable extends React.Component<Props> {
                     <TextLink to={routes.collections.detail.data(collection._id)}>
                         {collection.name}
                     </TextLink>
+                </TableCell>
+                <TableCell>
+                    {collection.description && TransformString.truncate(collection.description, 40)}
                 </TableCell>
                 <TableCell>
                     <ReadableDate date={collection.createdAt}/>

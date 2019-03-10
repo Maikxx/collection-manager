@@ -5,6 +5,7 @@ import { AddCollectionService } from '../../domains/Collection/AddCollectionServ
 export interface AddCollectionFields {
     collection: {
         name: string
+        description: string | null
     }
 }
 
@@ -13,7 +14,5 @@ export const addCollection = () => ({
     args: {
         collection: { type: GraphQLNonNull(AddCollectionType) },
     },
-    resolve: (_, args: AddCollectionFields) => {
-        return AddCollectionService(args)
-    },
+    resolve: (_, args: AddCollectionFields) => AddCollectionService(args),
 })

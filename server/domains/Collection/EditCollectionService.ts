@@ -2,14 +2,16 @@ import { EditCollectionArgs } from '../../api/collection/editCollection.mutation
 import { ApolloError } from 'apollo-server-express'
 import { database } from '../../db/db'
 
-export const EditCollectionService = async (args: EditCollectionArgs) => {
-    const { collection } = args
-    const { _id, name } = collection
+export async function EditCollectionService(args: EditCollectionArgs) {
+    const { collection: { _id, name, description } } = args
 
     try {
         const { rows } = await database.query(
-            'UPDATE collections SET name = $1 WHERE _id = $2 RETURNING *;',
-            [ name, _id ]
+            `UPDATE collections
+            SET name = $1, description = $3
+            WHERE _id = $2
+            RETURNING *;`,
+            [ name, _id, description ]
         )
 
         return rows[0]

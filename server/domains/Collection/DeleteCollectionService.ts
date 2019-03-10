@@ -2,7 +2,7 @@ import { DeleteCollectionFields } from '../../api/collection/deleteCollection.mu
 import { ApolloError } from 'apollo-server-express'
 import { database } from '../../db/db'
 
-export const DeleteCollectionService = async (args: DeleteCollectionFields) => {
+export async function DeleteCollectionService(args: DeleteCollectionFields) {
     const { _id } = args
     try {
         const { rowCount } = await database.query(

@@ -2,7 +2,7 @@ import { GetCollectionArgs } from '../../api/collection/getCollection.query'
 import { ApolloError } from 'apollo-server-express'
 import { database } from '../../db/db'
 
-export const GetCollectionService = async (args: GetCollectionArgs) => {
+export async function GetCollectionService(args: GetCollectionArgs) {
     const { byId: _id } = args
 
     try {

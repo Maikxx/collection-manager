@@ -16,6 +16,7 @@ import { AddCollectionItemModal } from './AddCollectionItemModal'
 import { GetCollectionRefetchFunction } from '../Apollo/GetCollectionQuery'
 import { ReadableDate } from '../../Core/DataDisplay/Date/ReadableDate'
 import { DeleteCollectedItemMutation, DeleteCollectedItemMutationFunction } from '../Apollo/DeleteCollectedItemMutation'
+import { Loader } from '../../Core/Feedback/Loader/Loader'
 
 interface Props {
     collection?: CollectionType
@@ -35,10 +36,10 @@ export class CollectionDataFields extends React.Component<Props, State> {
         const { collection } = this.props
 
         if (!collection) {
-            return null
+            return <Loader/>
         }
 
-        const { _id, name, createdAt, collectedItems } = collection
+        const { _id, name, createdAt, collectedItems, description } = collection
         const { showModal } = this.state
 
         return (
@@ -47,11 +48,14 @@ export class CollectionDataFields extends React.Component<Props, State> {
                     <Field title={`Name`}>
                         {name}
                     </Field>
+                    <Field title={`Description`}>
+                        {description}
+                    </Field>
                     <Field title={`Created at`}>
                         <ReadableDate date={createdAt}/>
                     </Field>
                 </FieldGroup>
-                <FieldGroup title={`Owned items`}>
+                <FieldGroup title={`Content`}>
                     <ActionBar>
                         <List horizontal={true}>
                             <ListItem right={true}>
@@ -77,6 +81,9 @@ export class CollectionDataFields extends React.Component<Props, State> {
                                     Name
                                 </TableCell>
                                 <TableCell>
+                                    Description
+                                </TableCell>
+                                <TableCell>
                                     Added on
                                 </TableCell>
                                 <TableCell/>
@@ -98,6 +105,9 @@ export class CollectionDataFields extends React.Component<Props, State> {
                     {item.name}
                 </TableCell>
                 <TableCell>
+                    {item.description}
+                </TableCell>
+                <TableCell>
                     <ReadableDate date={item.createdAt}/>
                 </TableCell>
                 <TableCell>
@@ -105,10 +115,10 @@ export class CollectionDataFields extends React.Component<Props, State> {
                         {(mutate, { loading }) => (
                             <Button
                                 loading={loading}
-                                onClick={() => this.onDelete(mutate, item._id)}
+                                onClick={() => this.onRemove(mutate, item._id)}
                                 type={ButtonType.danger}
                             >
-                                Delete {item.name}
+                                Remove
                             </Button>
                         )}
                     </DeleteCollectedItemMutation>
@@ -117,7 +127,7 @@ export class CollectionDataFields extends React.Component<Props, State> {
         ))
     }
 
-    private onDelete = async (mutateDelete: DeleteCollectedItemMutationFunction, id: number) => {
+    private onRemove = async (mutateDelete: DeleteCollectedItemMutationFunction, id: number) => {
         const { refetchCollection } = this.props
 
         const response = await mutateDelete({ variables: { _id: id }})

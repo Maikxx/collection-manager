@@ -11,6 +11,7 @@ const LIST_COLLECTIONS_QUERY = gql`
                 _id
                 createdAt
                 name
+                description
                 collectedItems {
                     _id
                     name

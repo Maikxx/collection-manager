@@ -14,6 +14,7 @@ const ADD_COLLECTION_MUTATION = gql`
 export interface AddCollectionMutationVariables {
     collection: {
         name: string
+        description: string | null
     }
 }
 

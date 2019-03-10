@@ -11,7 +11,5 @@ export const deleteCollection = () => ({
     args: {
         _id: { type: GraphQLNonNull(GraphQLInt) },
     },
-    resolve: (_, args: DeleteCollectionFields) => {
-        return DeleteCollectionService(args)
-    },
+    resolve: (_, args: DeleteCollectionFields) => DeleteCollectionService(args),
 })

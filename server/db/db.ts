@@ -11,39 +11,31 @@ export const database = new Client({
 export const connectToDatabase = async () => {
     await database.connect()
     await database.query(
-        `CREATE TABLE IF NOT EXISTS collections
+`CREATE TABLE IF NOT EXISTS collections
         (
             _id serial PRIMARY KEY,
             name character varying(150) COLLATE pg_catalog."default" NOT NULL,
+            description character varying(300),
             "createdAt" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-        )
-        WITH (
-            OIDS = FALSE
-        )
-        TABLESPACE pg_default;
+        );
 
-        ALTER TABLE collections
+        ALTER TABLE public.collections
             OWNER to admin;
-        `
-    )
-    await database.query(
-        `CREATE TABLE IF NOT EXISTS "collectedItems"
+
+        CREATE TABLE IF NOT EXISTS "collectedItems"
         (
             _id serial PRIMARY KEY,
             name character varying(150) COLLATE pg_catalog."default" NOT NULL,
+            description character varying(300),
             "collectionId" integer NOT NULL,
             "createdAt" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
             CONSTRAINT "collectedItems_collectionId_fkey" FOREIGN KEY ("collectionId")
                 REFERENCES collections (_id) MATCH SIMPLE
                 ON UPDATE NO ACTION
                 ON DELETE NO ACTION
-        )
-        WITH (
-            OIDS = FALSE
-        )
-        TABLESPACE pg_default;
+        );
 
-        ALTER TABLE "collectedItems"
+        ALTER TABLE public."collectedItems"
             OWNER to admin;
         `
     )

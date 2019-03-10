@@ -6,6 +6,7 @@ export interface EditCollectionArgs {
     collection: {
         _id: number
         name: string
+        description: string | null
     }
 }
 
@@ -14,7 +15,5 @@ export const editCollection = () => ({
     args: {
         collection: { type: GraphQLNonNull(EditCollectionType) },
     },
-    resolve: (_, args: EditCollectionArgs) => {
-        return EditCollectionService(args)
-    },
+    resolve: (_, args: EditCollectionArgs) => EditCollectionService(args),
 })

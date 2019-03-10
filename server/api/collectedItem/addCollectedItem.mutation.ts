@@ -6,7 +6,8 @@ import { AddCollectedItemService } from '../../domains/CollectedItem/AddCollecte
 export interface AddCollectedItemFields {
     collection: {
         _id: number
-        collectedItemName: string
+        name: string
+        description: string | null
     }
 }
 
@@ -15,7 +16,5 @@ export const addCollectedItem = () => ({
     args: {
         collection: { type: GraphQLNonNull(AddCollectedItemType) },
     },
-    resolve: (_, args: AddCollectedItemFields) => {
-        return AddCollectedItemService(args)
-    },
+    resolve: (_, args: AddCollectedItemFields) => AddCollectedItemService(args),
 })

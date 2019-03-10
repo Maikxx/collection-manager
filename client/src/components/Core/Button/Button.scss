@@ -65,11 +65,8 @@
     }
 
     .cm-Loader.cm-Button__spinner {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top: -10px;
-        margin-left: -10px;
+        width: 1.5em;
+        height: 1.5em;
     }
 
     .cm-Icon.cm-Button__icon {
@@ -119,12 +116,13 @@
         color: $danger-color;
 
         &:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: transparent;
+            color: darken($danger-color, 10%);
         }
 
         &:active {
-            color: darken($danger-color, 5%);
-            background-color: rgba(0, 0, 0, 0.1);
+            color: darken($danger-color, 10%);
+            background-color: transparent;
         }
 
         &.cm-Button--is-disabled {

@@ -9,10 +9,12 @@ const GET_COLLECTION_QUERY = gql`
         getCollection(byId: $byId) {
             _id
             name
+            description
             createdAt
             collectedItems {
                 _id
                 name
+                description
                 createdAt
             }
         }

@@ -85,7 +85,7 @@ export class CollectionsEditView extends React.Component<Props> {
         return (
             <CollectionEditPageActions
                 loading={loading}
-                onDelete={this.onDelete}
+                onRemove={this.onRemove}
                 onCancel={() => history.push(routes.collections.detail.data(id))}
             />
         )
@@ -103,6 +103,7 @@ export class CollectionsEditView extends React.Component<Props> {
                     collection: {
                         _id: Number(id),
                         name: fields.name,
+                        description: fields.description || null,
                     },
                 },
             })
@@ -116,11 +117,11 @@ export class CollectionsEditView extends React.Component<Props> {
             }
         }
 
-    private onDelete = async (mutateDelete: DeleteCollectionMutationFunction) => {
+    private onRemove = async (mutate: DeleteCollectionMutationFunction) => {
         const { history, match, refetch } = this.props
         const { id } = match.params
 
-        const response = await mutateDelete({ variables: { _id: Number(id) }})
+        const response = await mutate({ variables: { _id: Number(id) }})
 
         if (response && response.data && response.data.deleteCollection) {
             if (refetch) {

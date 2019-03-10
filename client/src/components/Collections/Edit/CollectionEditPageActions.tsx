@@ -7,12 +7,12 @@ import { Button, ButtonType } from '../../Core/Button/Button'
 interface Props {
     loading?: boolean
     onCancel: () => void
-    onDelete: (mutate: DeleteCollectionMutationFunction) => void
+    onRemove: (mutate: DeleteCollectionMutationFunction) => void
 }
 
 export class CollectionEditPageActions extends React.Component<Props> {
     public render() {
-        const { loading, onCancel, onDelete } = this.props
+        const { loading, onCancel, onRemove } = this.props
 
         return (
             <List horizontal={true}>
@@ -21,10 +21,10 @@ export class CollectionEditPageActions extends React.Component<Props> {
                         {(mutate, { loading }) => (
                             <Button
                                 loading={loading}
-                                onClick={() => onDelete(mutate)}
+                                onClick={() => onRemove(mutate)}
                                 type={ButtonType.danger}
                             >
-                                Delete
+                                Remove
                             </Button>
                         )}
                     </DeleteCollectionMutation>

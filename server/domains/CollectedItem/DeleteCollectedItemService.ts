@@ -2,8 +2,9 @@ import { DeleteCollectedItemFields } from '../../api/collectedItem/deleteCollect
 import { database } from '../../db/db'
 import { ApolloError } from 'apollo-server-core'
 
-export const DeleteCollectedItemService = async (args: DeleteCollectedItemFields) => {
+export async function DeleteCollectedItemService(args: DeleteCollectedItemFields) {
     const { _id } = args
+
     try {
         const { rowCount } = await database.query(
             'DELETE FROM "collectedItems" WHERE _id = $1;',

@@ -14,7 +14,8 @@ const ADD_COLLECTED_ITEM_MUTATION = gql`
 export interface AddCollectedItemMutationVariables {
     collection: {
         _id: number
-        collectedItemName: string
+        name: string
+        description: string | null
     }
 }
 

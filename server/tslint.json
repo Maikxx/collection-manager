@@ -67,7 +67,7 @@
         "no-unused-expression": true,
         "no-use-before-declare": true,
         "no-var-keyword": true,
-        "object-curly-spacing": [true, "always", { "arraysInObjects": false, "objectsInObjects": false }],
+        "object-curly-spacing": [true, "always", { "arraysInObjects": true, "objectsInObjects": true }],
         "object-literal-key-quotes": [true, "as-needed"],
         "one-line": [ true, "check-catch", "check-else", "check-open-brace", "check-whitespace" ],
         "one-variable-per-declaration": [true, "ignore-for-loop"],

@@ -4,6 +4,7 @@ import { FieldGroup } from '../../Core/Field/FieldGroup/FieldGroup'
 import { Field } from '../../Core/Field/Field/Field'
 import { CollectionType } from '../../../types/Collection'
 import { Input } from '../../Core/DataEntry/Input/Input'
+import { Loader } from '../../Core/Feedback/Loader/Loader'
 
 interface Props {
     collection?: CollectionType
@@ -12,7 +13,12 @@ interface Props {
 export class CollectionEditFields extends React.Component<Props> {
     public render() {
         const { collection } = this.props
-        const { name, createdAt } = collection || { name: undefined, createdAt: undefined }
+
+        if (!collection) {
+            return <Loader/>
+        }
+
+        const { name, createdAt, description } = collection
 
         return (
             <FieldCollection>
@@ -21,6 +27,13 @@ export class CollectionEditFields extends React.Component<Props> {
                         <Input
                             defaultValue={name}
                             name={`name`}
+                            type={`text`}
+                        />
+                    </Field>
+                    <Field title={`Description`}>
+                        <Input
+                            defaultValue={description}
+                            name={`description`}
                             type={`text`}
                         />
                     </Field>

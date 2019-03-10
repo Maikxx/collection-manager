@@ -6,7 +6,8 @@ export const AddCollectedItemType = new GraphQLInputObjectType({
     name: 'AddCollectedItemType',
     fields: () => ({
         _id: { type: GraphQLNonNull(GraphQLInt) },
-        collectedItemName: { type: GraphQLNonNull(GraphQLString) },
+        name: { type: GraphQLNonNull(GraphQLString) },
+        description: { type: GraphQLString },
     }),
 })
 
@@ -15,6 +16,7 @@ export const CollectedItemType = new GraphQLObjectType({
     fields: () => ({
         _id: { type: GraphQLNonNull(GraphQLInt) },
         name: { type: GraphQLNonNull(GraphQLString) },
+        description: { type: GraphQLString },
         createdAt: { type: GraphQLNonNull(GraphQLDate) },
     }),
 })

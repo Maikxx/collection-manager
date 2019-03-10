@@ -1,7 +1,7 @@
 import { ApolloError } from 'apollo-server-express'
 import { database } from '../../db/db'
 
-export const ListCollectionsService = async () => {
+export async function ListCollectionsService() {
     try {
         const { rows } = await database.query('SELECT * FROM collections;')
 
