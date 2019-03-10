@@ -42,7 +42,6 @@ export class AddCollectionItemModal extends React.Component<Props> {
                                     <Input
                                         name={`description`}
                                         type={`text`}
-                                        required={true}
                                     />
                                 </Field>
                                 <FieldCollectionFooter>
