@@ -9,7 +9,7 @@ import { routes } from '../../../views/routes'
 import { CollectionType } from '../../../types/Collection'
 import { Loader } from '../../Core/Feedback/Loader/Loader'
 import { ReadableDate } from '../../Core/DataDisplay/Date/ReadableDate'
-import { TransformString } from '../../../utils/TransformString'
+import { truncateString } from '../../../utils/TransformString'
 
 interface Props {
     collections?: CollectionType[]
@@ -65,7 +65,7 @@ export class CollectionsTable extends React.Component<Props> {
                     </TextLink>
                 </TableCell>
                 <TableCell>
-                    {collection.description && TransformString.truncate(collection.description, 40)}
+                    {collection.description && truncateString(collection.description, 40)}
                 </TableCell>
                 <TableCell>
                     <ReadableDate date={collection.createdAt}/>
