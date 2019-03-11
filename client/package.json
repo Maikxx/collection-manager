@@ -12,6 +12,7 @@
     "watch-client": "parcel public/index.html"
   },
   "devDependencies": {
+    "@babel/plugin-transform-regenerator": "^7.3.4",
     "@types/classnames": "^2.2.6",
     "@types/graphql": "^14.0.3",
     "@types/lodash-es": "^4.17.1",
@@ -37,7 +38,7 @@
     "@material-ui/core": "^3.6.2",
     "@material-ui/icons": "^3.0.1",
     "apollo-boost": "^0.1.22",
-    "babel-polyfill": "^6.26.0",
+    "apollo-client": "^2.5.1",
     "classnames": "^2.2.6",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
