@@ -11,7 +11,7 @@ export const database = new Client({
 export const connectToDatabase = async () => {
     await database.connect()
     await database.query(
-`CREATE TABLE IF NOT EXISTS collections
+        `CREATE TABLE IF NOT EXISTS collections
         (
             _id serial PRIMARY KEY,
             name character varying(150) COLLATE pg_catalog."default" NOT NULL,
